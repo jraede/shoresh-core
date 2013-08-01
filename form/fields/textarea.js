@@ -3,25 +3,22 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['jquery', 'core/form/field', 'core/form/maskedInput'], function($, Field) {
-    var Mask, _ref;
+  define(['jquery', 'core/form/field'], function($, Field) {
+    var TextArea, _ref;
 
-    $.mask.definitions['~'] = '[\d+]';
-    return Mask = (function(_super) {
-      __extends(Mask, _super);
+    return TextArea = (function(_super) {
+      __extends(TextArea, _super);
 
-      function Mask() {
-        _ref = Mask.__super__.constructor.apply(this, arguments);
+      function TextArea() {
+        _ref = TextArea.__super__.constructor.apply(this, arguments);
         return _ref;
       }
 
-      Mask.prototype.tagName = 'div';
-
-      Mask.prototype.render = function() {
+      TextArea.prototype.render = function() {
         var input, label;
 
         label = $('<label/>').html(this.options.label).appendTo(this.$el);
-        input = $('<input type="text"/>').val(this.val).appendTo(this.$el);
+        input = $('<textarea/>').addClass('form-control').val(this.val).appendTo(this.$el);
         if (this.options.help) {
           $('<p class="help-block"/>').html(this.options.help).insertBefore(input);
         }
@@ -29,12 +26,19 @@
         return this.$el;
       };
 
-      Mask.prototype.postRender = function() {
-        Mask.__super__.postRender.apply(this, arguments);
-        return this.$('input').mask(this.options.mask);
+      TextArea.prototype.getValue = function() {
+        return this.$('textarea').val();
       };
 
-      return Mask;
+      TextArea.prototype.populateSelf = function() {
+        var property, val;
+
+        property = this.options.property;
+        val = this.model.get(property);
+        return this.$('textarea').val(val);
+      };
+
+      return TextArea;
 
     })(Field);
   });

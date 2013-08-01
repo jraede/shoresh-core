@@ -14,7 +14,10 @@ define ['jquery', 'core/form/field'], ($, Field) ->
 			super
 			if !@$('select').length
 				select = $('<select class="form-control"/>').appendTo @$el
-
+			else
+				select = @$('select')
+				
+			if @options.options and !@$('select option').length
 				if @options.options instanceof Array
 					for val in @options.options
 						$('<option/>').val(val).html(val).appendTo(select)

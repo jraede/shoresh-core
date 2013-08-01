@@ -16,6 +16,9 @@ define ['jquery','underscore'], ($, _) ->
 	class Template 
 		@currentlyLoading:[]
 		@templateFormat: (template) ->
+			if window.shoreshConfig and window.shoreshConfig.templateFormat
+				return window.shoreshConfig.templateFormat(template)
+
 			return '/includes/templates/' + template + '.php'
 		@currentlyLoadingCallbacks:{}
 
@@ -28,7 +31,7 @@ define ['jquery','underscore'], ($, _) ->
 			else
 				@currentlyLoading.push(template)
 				@currentlyLoadingCallbacks[template] = []
-				$.get @templateFormat(tempate), (view) =>
+				$.get @templateFormat(template), (view) =>
 					@cache[template] = view
 
 					for queuedCallback in @currentlyLoadingCallbacks[template]

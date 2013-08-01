@@ -17,7 +17,7 @@
       Price.prototype.postRender = function() {
         this.$('input').priceFormat({
           prefix: '$',
-          thousandsSeparator: ''
+          thousandsSeparator: ','
         });
         return Price.__super__.postRender.apply(this, arguments);
       };

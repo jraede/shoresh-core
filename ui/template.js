@@ -24,6 +24,9 @@
       Template.currentlyLoading = [];
 
       Template.templateFormat = function(template) {
+        if (window.shoreshConfig && window.shoreshConfig.templateFormat) {
+          return window.shoreshConfig.templateFormat(template);
+        }
         return '/includes/templates/' + template + '.php';
       };
 
@@ -41,7 +44,7 @@
         } else {
           this.currentlyLoading.push(template);
           this.currentlyLoadingCallbacks[template] = [];
-          return $.get(this.templateFormat(tempate), function(view) {
+          return $.get(this.templateFormat(template), function(view) {
             var index, queuedCallback, _i, _len, _ref;
 
             _this.cache[template] = view;

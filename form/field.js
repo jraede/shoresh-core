@@ -36,6 +36,7 @@
       };
 
       Field.prototype.postRender = function() {
+        console.log('running post render on', this);
         return this.populateSelf();
       };
 
@@ -43,13 +44,13 @@
         var property;
 
         property = this.options.property;
-        console.log('setting ', property, 'to ', this.getValue());
         return this.model.set(property, this.getValue());
       };
 
       Field.prototype.populateSelf = function() {
         var property, val;
 
+        console.log('running populate self');
         property = this.options.property;
         val = this.model.get(property);
         return this.$('input').val(val);
@@ -58,7 +59,6 @@
       Field.prototype.displayErrors = function(errors) {
         var error, _i, _len, _results;
 
-        console.log(errors);
         _results = [];
         for (_i = 0, _len = errors.length; _i < _len; _i++) {
           error = errors[_i];
@@ -68,7 +68,6 @@
       };
 
       Field.prototype.validate = function(suppressErrors) {
-        console.log('validating field');
         if (this.validator.run(this.getValue())) {
           return true;
         } else if (!suppressErrors) {

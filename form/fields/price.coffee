@@ -4,7 +4,7 @@ define ['core/form/fields/text', 'jquery','core/form/priceMask'], (Text, $) ->
 		postRender:->
 			@$('input').priceFormat
 				prefix: '$'
-				thousandsSeparator: ''
+				thousandsSeparator: ','
 			super
 
 

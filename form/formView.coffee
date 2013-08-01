@@ -1,10 +1,9 @@
 define ['jquery', 'backbone', 'core/form/fieldFactory', 'underscore'], ($, Backbone, FieldFactory, _) ->
 	class FormView extends Backbone.View
 		tagName:'form'
-		fields:null
 		saveOnProcess:true
 		events:
-			'click input[type="submit"]':'process'
+			'click .submit':'process'
 
 		# This method handles error message rendering so it can be customized
 		# and the field classes do not have to be overrode
@@ -12,7 +11,13 @@ define ['jquery', 'backbone', 'core/form/fieldFactory', 'underscore'], ($, Backb
 			fieldEl = @fields[field].$el
 			fieldEl.addClass('has-error')
 			message = @model.getErrorMessage(field, error)
-			p = $('<p class="alert alert-danger"/>').html(message).prependTo(fieldEl)
+
+			label = fieldEl.find('label')
+
+			if label
+				p = $('<p class="alert alert-danger"/>').html(message).insertAfter(label)
+			else
+				p = $('<p class="alert alert-danger"/>').html(message).prependTo(fieldEl)
 			setTimeout ->
 				p.remove()
 			, 2000
@@ -95,6 +100,17 @@ define ['jquery', 'backbone', 'core/form/fieldFactory', 'underscore'], ($, Backb
 				@model.trigger('change')
 				
 				if @saveOnProcess
-					@model.save()
+					btn = @$(e.currentTarget)
+
+					currentHtml = btn.html()
+					btn.data('defaultHtml', currentHtml)
+					btn.html('<i class="icon-spinner icon-spin"></i> Saving...').attr('disabled', 'disabled')
+					@model.save null,
+						success:->
+							btn.html('Saved!').removeClass('btn-primary').addClass('btn-success')
+							setTimeout ->
+								btn.html(btn.data('defaultHtml')).removeClass('btn-success').addClass('btn-primary').attr('disabled', false)
+							, 2000
+
 
 			return validated

@@ -3,18 +3,18 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['jquery', 'core/form/field', 'backbone'], function($, Field, Backbone) {
-    var Text, _ref;
+  define(['jquery', 'core/form/field', 'backbone', 'core/ui/template'], function($, Field, Backbone, Template) {
+    var SubForm, _ref;
 
-    return Text = (function(_super) {
-      __extends(Text, _super);
+    return SubForm = (function(_super) {
+      __extends(SubForm, _super);
 
-      function Text() {
-        _ref = Text.__super__.constructor.apply(this, arguments);
+      function SubForm() {
+        _ref = SubForm.__super__.constructor.apply(this, arguments);
         return _ref;
       }
 
-      Text.prototype.render = function() {
+      SubForm.prototype.render = function() {
         var label;
 
         label = $('<label/>').html(this.options.label).appendTo(this.$el);
@@ -25,20 +25,20 @@
         return this.$el;
       };
 
-      Text.prototype.postRender = function() {
+      SubForm.prototype.postRender = function() {
         var url,
           _this = this;
 
-        Text.__super__.postRender.apply(this, arguments);
         if (this.options.url && typeof this.options.url === 'function') {
           url = _.bind(this.options.url, this.model)();
         } else {
           url = this.options.url;
         }
-        this.collection = new Backbone.Collection({
-          model: this.options.modelClass,
-          url: url
-        });
+        console.log('got url:', url);
+        this.collection = new Backbone.Collection;
+        this.collection.model = this.options.modelClass;
+        this.collection.url = url;
+        console.log('collection,', this.collection);
         this.forms = [];
         this.$el.css({
           position: 'relative'
@@ -60,10 +60,11 @@
         }).prependTo(this.$el);
         this.ul = $('<ul class="list-group"/>').appendTo(this.$el);
         this.listenTo(this.model, 'sync', this.saveModels);
-        return this.listenTo(this.collection, 'add', this.showNewModel);
+        this.listenTo(this.collection, 'add', this.showNewModel);
+        return SubForm.__super__.postRender.apply(this, arguments);
       };
 
-      Text.prototype.populateSelf = function() {
+      SubForm.prototype.populateSelf = function() {
         var obj, property, val, _i, _len, _results;
 
         if (this.options.getModelsViaAPI === true) {
@@ -82,7 +83,7 @@
         }
       };
 
-      Text.prototype.addNewModel = function(attr) {
+      SubForm.prototype.addNewModel = function(attr) {
         var ModelClass, key, model, val, _i, _len;
 
         ModelClass = this.options.modelClass;
@@ -100,64 +101,104 @@
         return this.collection.add(model);
       };
 
-      Text.prototype.showNewModel = function(model) {
+      SubForm.prototype.showNewModel = function(model) {
         var form, view,
           _this = this;
 
-        view = $('<li class="list-group-item"/>').css('position', 'relative').appendTo(this.ul);
-        form = model.generateForm(view);
-        form.saveOnProcess = false;
-        form.render(function() {
-          var removeButton;
+        console.log(model);
+        if (this.options.template) {
+          return Template.load(this.options.template, function(view) {
+            var form;
 
-          return removeButton = $('<button class="btn btn-danger btn-small pull-right"/>').css({
-            position: 'absolute',
-            top: '0px',
-            right: '0px',
-            '-moz-border-radius-bottom-right': '0px',
-            '-webkit-border-bottom-right-radius': '0px',
-            'border-bottom-right-radius': '0px',
-            '-moz-border-radius-top-left': '0px',
-            '-webkit-border-top-left-radius': '0px',
-            'border-top-left-radius': '0px'
-          }).html('<i class="icon-remove"></i>').data('form', form).click(function(e) {
-            var button;
+            view = $('<li class="list-group-item"/>').css('position', 'relative').html(_.template(view)).prependTo(_this.ul);
+            form = model.generateForm(view);
+            form.saveOnProcess = false;
+            form.render(function() {
+              var removeButton;
 
-            e.preventDefault();
-            button = $(e.currentTarget);
-            return _this.removeForm(button.data('form'));
-          }).prependTo(form.$el);
-        });
-        return this.forms.push(form);
+              return removeButton = $('<button class="btn btn-danger btn-small pull-right"/>').css({
+                position: 'absolute',
+                top: '0px',
+                right: '0px',
+                '-moz-border-radius-bottom-right': '0px',
+                '-webkit-border-bottom-right-radius': '0px',
+                'border-bottom-right-radius': '0px',
+                '-moz-border-radius-top-left': '0px',
+                '-webkit-border-top-left-radius': '0px',
+                'border-top-left-radius': '0px'
+              }).html('<i class="icon-remove"></i>').data('form', form).click(function(e) {
+                var button;
+
+                e.preventDefault();
+                button = $(e.currentTarget);
+                return _this.removeForm(button.data('form'));
+              }).prependTo(form.$el);
+            });
+            return _this.forms.push(form);
+          });
+        } else {
+          view = $('<li class="list-group-item"/>').css('position', 'relative').prependTo(this.ul);
+          form = model.generateForm(view);
+          form.saveOnProcess = false;
+          form.render(function() {
+            var removeButton;
+
+            return removeButton = $('<button class="btn btn-danger btn-small pull-right"/>').css({
+              position: 'absolute',
+              top: '0px',
+              right: '0px',
+              '-moz-border-radius-bottom-right': '0px',
+              '-webkit-border-bottom-right-radius': '0px',
+              'border-bottom-right-radius': '0px',
+              '-moz-border-radius-top-left': '0px',
+              '-webkit-border-top-left-radius': '0px',
+              'border-top-left-radius': '0px'
+            }).html('<i class="icon-remove"></i>').data('form', form).click(function(e) {
+              var button;
+
+              e.preventDefault();
+              button = $(e.currentTarget);
+              return _this.removeForm(button.data('form'));
+            }).prependTo(form.$el);
+          });
+          return this.forms.push(form);
+        }
       };
 
-      Text.prototype.removeForm = function(form) {
+      SubForm.prototype.removeForm = function(form) {
         var model;
 
         model = form.model;
+        if (!model.isNew()) {
+          if (!confirm('Are you sure?')) {
+            return;
+          }
+        }
         form.remove();
         if (this.options.destroyModelOnRemove === true) {
           return model.destroy();
         }
       };
 
-      Text.prototype.validate = function(suppressErrors) {
+      SubForm.prototype.validate = function(suppressErrors) {
         var form, validated, _i, _len, _ref1;
 
         validated = true;
         _ref1 = this.forms;
         for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
           form = _ref1[_i];
-          if (!this.form.process()) {
+          console.log('about to process form:', form);
+          if (!form.process()) {
             validated = false;
           }
         }
         return validated;
       };
 
-      Text.prototype.saveModels = function() {
+      SubForm.prototype.saveModels = function() {
         var form, keyFrom, keyTo, _i, _len, _ref1, _results;
 
+        console.log('saving models');
         keyFrom = this.options.keyFrom;
         keyTo = this.options.keyTo;
         _ref1 = this.forms;
@@ -170,7 +211,7 @@
         return _results;
       };
 
-      return Text;
+      return SubForm;
 
     })(Field);
   });

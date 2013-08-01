@@ -76,7 +76,7 @@
           return false;
         }
         match = value.toString().match(regex);
-        if (match !== null && str === match[0]) {
+        if (match !== null && value === match[0]) {
           return true;
         }
         return false;

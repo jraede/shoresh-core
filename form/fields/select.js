@@ -31,6 +31,10 @@
         Select.__super__.postRender.apply(this, arguments);
         if (!this.$('select').length) {
           select = $('<select class="form-control"/>').appendTo(this.$el);
+        } else {
+          select = this.$('select');
+        }
+        if (this.options.options && !this.$('select option').length) {
           if (this.options.options instanceof Array) {
             _ref1 = this.options.options;
             _results = [];

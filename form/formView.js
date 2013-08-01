@@ -16,21 +16,24 @@
 
       FormView.prototype.tagName = 'form';
 
-      FormView.prototype.fields = null;
-
       FormView.prototype.saveOnProcess = true;
 
       FormView.prototype.events = {
-        'click input[type="submit"]': 'process'
+        'click .submit': 'process'
       };
 
       FormView.prototype.displayError = function(field, error) {
-        var fieldEl, message, p;
+        var fieldEl, label, message, p;
 
         fieldEl = this.fields[field].$el;
         fieldEl.addClass('has-error');
         message = this.model.getErrorMessage(field, error);
-        p = $('<p class="alert alert-danger"/>').html(message).prependTo(fieldEl);
+        label = fieldEl.find('label');
+        if (label) {
+          p = $('<p class="alert alert-danger"/>').html(message).insertAfter(label);
+        } else {
+          p = $('<p class="alert alert-danger"/>').html(message).prependTo(fieldEl);
+        }
         return setTimeout(function() {
           return p.remove();
         }, 2000);
@@ -118,7 +121,7 @@
       };
 
       FormView.prototype.process = function(e) {
-        var field, name, validated, _ref1, _ref2;
+        var btn, currentHtml, field, name, validated, _ref1, _ref2;
 
         if (e) {
           e.preventDefault();
@@ -140,7 +143,18 @@
           }
           this.model.trigger('change');
           if (this.saveOnProcess) {
-            this.model.save();
+            btn = this.$(e.currentTarget);
+            currentHtml = btn.html();
+            btn.data('defaultHtml', currentHtml);
+            btn.html('<i class="icon-spinner icon-spin"></i> Saving...').attr('disabled', 'disabled');
+            this.model.save(null, {
+              success: function() {
+                btn.html('Saved!').removeClass('btn-primary').addClass('btn-success');
+                return setTimeout(function() {
+                  return btn.html(btn.data('defaultHtml')).removeClass('btn-success').addClass('btn-primary').attr('disabled', false);
+                }, 2000);
+              }
+            });
           }
         }
         return validated;

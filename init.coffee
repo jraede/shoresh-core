@@ -18,11 +18,12 @@ if !explode[0].length
 pathToCheck = explode[explode.length - 1]
 
 
-if pathToCheck.indexOf('.') >= 0
-	# strip out the extension
-	explode[explode.length - 1] = pathToCheck.substr(0, pathToCheck.lastIndexOf('.'))
-else
-	explode.push('index')
+if window.shoreshConfig and window.shoreshConfig.fileExtensions is true
+	if pathToCheck.indexOf('.') >= 0
+		# strip out the extension
+		explode[explode.length - 1] = pathToCheck.substr(0, pathToCheck.lastIndexOf('.'))
+	else
+		explode.push('index')
 
 
 requirejs.onError = (err) ->

@@ -1,5 +1,7 @@
 define ['jquery', 'core/form/field', 'core/form/maskedInput'], ($, Field) ->
-	class Text extends Field
+	$.mask.definitions['~']='[\d+]'
+
+	class Mask extends Field
 		tagName:'div'
 		
 		render:->

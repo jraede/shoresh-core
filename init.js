@@ -18,10 +18,12 @@
 
   pathToCheck = explode[explode.length - 1];
 
-  if (pathToCheck.indexOf('.') >= 0) {
-    explode[explode.length - 1] = pathToCheck.substr(0, pathToCheck.lastIndexOf('.'));
-  } else {
-    explode.push('index');
+  if (window.shoreshConfig && window.shoreshConfig.fileExtensions === true) {
+    if (pathToCheck.indexOf('.') >= 0) {
+      explode[explode.length - 1] = pathToCheck.substr(0, pathToCheck.lastIndexOf('.'));
+    } else {
+      explode.push('index');
+    }
   }
 
   requirejs.onError = function(err) {

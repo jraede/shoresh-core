@@ -64,7 +64,7 @@ define [], ->
 
 			match = value.toString().match(regex);
 
-			if match isnt null and str is match[0]
+			if match isnt null and value is match[0]
 				return true
 			return false
 
