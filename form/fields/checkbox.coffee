@@ -1,4 +1,4 @@
-define ['jquery', 'components/form/field'], ($, Field) ->
+define ['jquery', 'core/form/field'], ($, Field) ->
 	class Checkbox extends Field
 		tagName:'div'
 		

@@ -1,4 +1,4 @@
-define ['components/file/html5upload/fileCollectionView', 'components/form/fields/upload/fileView'], (FileCollectionView, FileView) ->
+define ['core/file/html5upload/fileCollectionView', 'core/form/fields/upload/fileView'], (FileCollectionView, FileView) ->
 	class FormFileCollectionView extends FileCollectionView
 		tagName:'div'
 

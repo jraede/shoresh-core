@@ -1,4 +1,4 @@
-define ['components/social/facebook/connect'], (FB) ->
+define ['core/social/facebook/connect'], (FB) ->
 	class FacebookAPI
 		@accessToken:null
 		@login: (scope, callback) ->

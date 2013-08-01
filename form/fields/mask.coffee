@@ -1,4 +1,4 @@
-define ['jquery', 'components/form/field', 'components/form/maskedInput'], ($, Field) ->
+define ['jquery', 'core/form/field', 'core/form/maskedInput'], ($, Field) ->
 	class Text extends Field
 		tagName:'div'
 		

@@ -1,4 +1,4 @@
-define ['jquery', 'components/file/html5upload/fileView'], ($, FileView) ->
+define ['jquery', 'core/file/html5upload/fileView'], ($, FileView) ->
 	class SettingsFileView extends FileView
 		tagName:'li'
 		className:'file-upload'

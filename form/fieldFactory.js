@@ -7,7 +7,7 @@
       function FieldFactory() {}
 
       FieldFactory.generate = function(config, callback) {
-        return require(['components/form/fields/' + config.type], function(Field) {
+        return require(['core/form/fields/' + config.type], function(Field) {
           var field;
 
           field = new Field(config);

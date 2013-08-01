@@ -1,4 +1,4 @@
-define ['components/form/field', 'components/form/fields/upload/fileCollectionView', 'components/file/html5upload/uploader'], (Field, FileCollectionView, Uploader) ->
+define ['core/form/field', 'core/form/fields/upload/fileCollectionView', 'core/file/html5upload/uploader'], (Field, FileCollectionView, Uploader) ->
 	class Upload extends Field
 		render: ->
 			label = $('<label/>').html(@options.label).appendTo @$el

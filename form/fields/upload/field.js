@@ -3,7 +3,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['components/form/field', 'components/form/fields/upload/fileCollectionView', 'components/file/html5upload/uploader'], function(Field, FileCollectionView, Uploader) {
+  define(['core/form/field', 'core/form/fields/upload/fileCollectionView', 'core/file/html5upload/uploader'], function(Field, FileCollectionView, Uploader) {
     var Upload, _ref;
 
     return Upload = (function(_super) {

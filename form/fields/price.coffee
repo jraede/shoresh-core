@@ -1,5 +1,5 @@
 
-define ['components/form/fields/text', 'jquery','components/form/priceMask'], (Text, $) ->
+define ['core/form/fields/text', 'jquery','core/form/priceMask'], (Text, $) ->
 	class Price extends Text
 		postRender:->
 			@$('input').priceFormat

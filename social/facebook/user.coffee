@@ -1,4 +1,4 @@
-define ['components/social/facebook/api'], (FBApi) ->
+define ['core/social/facebook/api'], (FBApi) ->
 	class FacebookUser 
 		id:null
 		userInfo:{}

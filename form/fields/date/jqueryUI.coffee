@@ -9,7 +9,7 @@
  * @package  Shoresh
  * @subpackage  Form
 ###
-define ['components/form/fields/text', 'jquery', 'moment', 'components/ui/jqueryui/datepicker'], (Text, $, moment) ->
+define ['core/form/fields/text', 'jquery', 'moment', 'core/ui/jqueryui/datepicker'], (Text, $, moment) ->
 	class jQueryUIDate extends Text
 		postRender:->
 			@$('input').datepicker

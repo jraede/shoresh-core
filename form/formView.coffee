@@ -1,4 +1,4 @@
-define ['jquery', 'backbone', 'components/form/fieldFactory', 'underscore'], ($, Backbone, FieldFactory, _) ->
+define ['jquery', 'backbone', 'core/form/fieldFactory', 'underscore'], ($, Backbone, FieldFactory, _) ->
 	class FormView extends Backbone.View
 		tagName:'form'
 		fields:null

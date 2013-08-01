@@ -1,4 +1,4 @@
-define ['backbone', 'components/form/validator'], (Backbone, Validator)->
+define ['backbone', 'core/form/validator'], (Backbone, Validator)->
 	class Field extends Backbone.View
 		tagName:'div'
 		className:'form-group'

@@ -1,4 +1,4 @@
-define ['jquery', 'components/geo/googleMaps/api'], ($, GoogleMaps) ->
+define ['jquery', 'core/geo/googleMaps/api'], ($, GoogleMaps) ->
 	class GoogleMap 
 
 		defaultParams:

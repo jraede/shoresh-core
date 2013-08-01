@@ -11,7 +11,7 @@
  * @author Jason Raede 
  ###
 
-define ['components/social/facebook/api', 'components/social/facebook/user', 'components/social/facebook/connect'], (FBApi, FBUser, FB) ->
+define ['core/social/facebook/api', 'core/social/facebook/user', 'core/social/facebook/connect'], (FBApi, FBUser, FB) ->
 	class FacebookConnect
 		@events:
 			userLoggedIn:[]

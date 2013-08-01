@@ -1,4 +1,4 @@
-define ['backbone', 'components/file/html5upload/file'], (Backbone, FileModel) ->
+define ['backbone', 'core/file/html5upload/file'], (Backbone, FileModel) ->
 	class FileCollection extends Backbone.Collection
 		model:FileModel
 		

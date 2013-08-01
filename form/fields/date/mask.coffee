@@ -1,4 +1,4 @@
-define ['components/form/fields/mask', 'moment'], (Mask, moment) ->
+define ['core/form/fields/mask', 'moment'], (Mask, moment) ->
 	class DateMask extends Mask
 		options:
 			apiFormat:'YYYY-MM-DD'

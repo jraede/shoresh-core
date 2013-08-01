@@ -1,4 +1,4 @@
-define ['components/geo/googleMaps/api'], (GoogleMaps) ->
+define ['core/geo/googleMaps/api'], (GoogleMaps) ->
 	class GoogleMapsDirections 
 		@getDirectionsRenderer: ->
 			if !@directionsRenderer then @directionsRenderer = new GoogleMaps.DirectionsRenderer()

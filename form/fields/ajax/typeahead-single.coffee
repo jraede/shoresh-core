@@ -45,7 +45,7 @@
  * @url  http://fortawesome.github.io/Font-Awesome/
 ###
 
-define ['components/ui/bootstrap/bootstrap', 'components/form/field', 'jquery'], (Field, $) ->
+define ['core/ui/bootstrap/bootstrap', 'core/form/field', 'jquery'], (Field, $) ->
 	class TypeaheadAjaxMany extends Field
 		constructor: ->
 			super

@@ -3,7 +3,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['components/file/html5upload/fileCollectionView', 'components/form/fields/upload/fileView'], function(FileCollectionView, FileView) {
+  define(['core/file/html5upload/fileCollectionView', 'core/form/fields/upload/fileView'], function(FileCollectionView, FileView) {
     var FormFileCollectionView, _ref;
 
     return FormFileCollectionView = (function(_super) {

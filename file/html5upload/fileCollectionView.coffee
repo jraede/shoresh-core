@@ -1,4 +1,4 @@
-define ['components/file/html5upload/fileCollection', 'backbone'], (FileCollection, Backbone) ->
+define ['core/file/html5upload/fileCollection', 'backbone'], (FileCollection, Backbone) ->
 	class FileCollectionView extends Backbone.View
 			
 

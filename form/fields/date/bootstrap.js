@@ -20,7 +20,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['components/form/fields/text', 'jquery', 'moment', 'components/date/bootstrap-datepicker/datepicker'], function(Text, $, moment) {
+  define(['core/form/fields/text', 'jquery', 'moment', 'core/date/bootstrap-datepicker/datepicker'], function(Text, $, moment) {
     var BootstrapDate, _ref;
 
     return BootstrapDate = (function(_super) {

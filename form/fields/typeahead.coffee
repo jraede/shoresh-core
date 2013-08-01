@@ -5,7 +5,7 @@
  * Twitter Bootstrap CSS
  * @url  http://twitter.github.io/bootstrap/index.html
 ###
-define ['components/ui/bootstrap/bootstrap', 'components/form/fields/text'], (Text) ->
+define ['core/ui/bootstrap/bootstrap', 'core/form/fields/text'], (Text) ->
 	class BootstrapTypeahead extends Text
 		postRender:->
 			super

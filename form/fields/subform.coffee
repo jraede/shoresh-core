@@ -1,4 +1,4 @@
-define ['jquery', 'components/form/field', 'backbone'], ($, Field, Backbone) ->
+define ['jquery', 'core/form/field', 'backbone'], ($, Field, Backbone) ->
 	class Text extends Field
 		
 		render:->

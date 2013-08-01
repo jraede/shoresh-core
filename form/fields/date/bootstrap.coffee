@@ -13,7 +13,7 @@
  * @package  Shoresh
  * @subpackage  Form
 ###
-define ['components/form/fields/text', 'jquery', 'moment', 'components/date/bootstrap-datepicker/datepicker'], (Text, $, moment) ->
+define ['core/form/fields/text', 'jquery', 'moment', 'core/date/bootstrap-datepicker/datepicker'], (Text, $, moment) ->
 	class BootstrapDate extends Text
 		postRender:->
 			@$('input').datepicker

@@ -14,7 +14,7 @@
 
 
 (function() {
-  define(['components/social/facebook/api', 'components/social/facebook/user', 'components/social/facebook/connect'], function(FBApi, FBUser, FB) {
+  define(['core/social/facebook/api', 'core/social/facebook/user', 'core/social/facebook/connect'], function(FBApi, FBUser, FB) {
     var FacebookConnect;
 
     return FacebookConnect = (function() {

@@ -3,7 +3,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['components/form/fields/text', 'jquery', 'components/form/priceMask'], function(Text, $) {
+  define(['core/form/fields/text', 'jquery', 'core/form/priceMask'], function(Text, $) {
     var Price, _ref;
 
     return Price = (function(_super) {

@@ -1,4 +1,4 @@
-define ['backbone', 'components/form/formView'], (Backbone, FormView) ->
+define ['backbone', 'core/form/formView'], (Backbone, FormView) ->
 	class FormModel extends Backbone.Model
 		fieldConfig:null	
 		formViewClass:FormView
