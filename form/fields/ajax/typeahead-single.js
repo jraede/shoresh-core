@@ -51,18 +51,18 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['core/ui/bootstrap/bootstrap', 'core/form/field', 'jquery'], function(Field, $) {
-    var TypeaheadAjaxMany;
+  define(['core/form/field', 'jquery', 'core/ui/bootstrap/typeahead'], function(Field, $) {
+    var TypeaheadAjaxSingle;
 
-    return TypeaheadAjaxMany = (function(_super) {
-      __extends(TypeaheadAjaxMany, _super);
+    return TypeaheadAjaxSingle = (function(_super) {
+      __extends(TypeaheadAjaxSingle, _super);
 
-      function TypeaheadAjaxMany() {
-        TypeaheadAjaxMany.__super__.constructor.apply(this, arguments);
+      function TypeaheadAjaxSingle() {
+        TypeaheadAjaxSingle.__super__.constructor.apply(this, arguments);
         this.value = null;
       }
 
-      TypeaheadAjaxMany.prototype.render = function() {
+      TypeaheadAjaxSingle.prototype.render = function() {
         var input, label;
 
         label = $('<label/>').html(this.options.label).appendTo(this.$el);
@@ -74,23 +74,27 @@
         return this.$el;
       };
 
-      TypeaheadAjaxMany.prototype.postRender = function() {
+      TypeaheadAjaxSingle.prototype.postRender = function() {
         var _this = this;
 
         this.searchField = this.$('input[type="text"]');
+        this.searchField.attr('autocomplete', 'off');
         this.searchField.typeahead({
           source: function(query, process) {
+            console.log('typing...');
+            if (_this.options.onStartTyping && typeof _this.options.onStartTyping === 'function') {
+              _this.options.onStartTyping;
+            }
             return $.getJSON(_this.options.dataSourceUrl, {
               q: query
             }, function(response) {
               var result, results, _i, _len;
 
               results = [];
+              console.log('got response:', response);
               for (_i = 0, _len = response.length; _i < _len; _i++) {
                 result = response[_i];
-                if (_this.value && _this.value.id !== result.id) {
-                  results.push(result.id + '@@@@' + result.label);
-                }
+                results.push(result.id + '@@@@' + result.label);
               }
               return process(results);
             });
@@ -112,28 +116,33 @@
               id: id,
               label: label
             };
+            if (_this.options.onSelect && typeof _this.options.onSelect === 'function') {
+              _this.options.onSelect(_this.value);
+            }
             return label;
           }
         });
-        return TypeaheadAjaxMany.__super__.postRender.apply(this, arguments);
+        return TypeaheadAjaxSingle.__super__.postRender.apply(this, arguments);
       };
 
-      TypeaheadAjaxMany.prototype.getValue = function() {
+      TypeaheadAjaxSingle.prototype.getValue = function() {
         return this.value;
       };
 
-      TypeaheadAjaxMany.prototype.populateSelf = function() {
+      TypeaheadAjaxSingle.prototype.populateSelf = function() {
         var property, val;
 
         property = this.options.property;
-        val = this.model.get(property);
-        if (typeof val === 'object') {
-          this.value = val;
-          return this.searchField.val(val.label);
+        if (this.model) {
+          val = this.model.get(property);
+          if (typeof val === 'object') {
+            this.value = val;
+            return this.searchField.val(val.label);
+          }
         }
       };
 
-      return TypeaheadAjaxMany;
+      return TypeaheadAjaxSingle;
 
     })(Field);
   });

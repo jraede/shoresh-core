@@ -5,6 +5,11 @@ define ['jquery', 'backbone', 'core/form/fieldFactory', 'underscore'], ($, Backb
 		events:
 			'click .submit':'process'
 
+		disable:->
+			@$('input,select,textarea').attr('disabled', 'disabled')
+		enable:->
+			@$('input,select,textarea').attr('disabled', false)
+
 		# This method handles error message rendering so it can be customized
 		# and the field classes do not have to be overrode
 		displayError:(field, error) ->

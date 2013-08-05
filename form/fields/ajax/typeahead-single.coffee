@@ -45,8 +45,8 @@
  * @url  http://fortawesome.github.io/Font-Awesome/
 ###
 
-define ['core/ui/bootstrap/bootstrap', 'core/form/field', 'jquery'], (Field, $) ->
-	class TypeaheadAjaxMany extends Field
+define ['core/form/field', 'jquery', 'core/ui/bootstrap/typeahead'], (Field, $) ->
+	class TypeaheadAjaxSingle extends Field
 		constructor: ->
 			super
 			@value = null
@@ -62,19 +62,23 @@ define ['core/ui/bootstrap/bootstrap', 'core/form/field', 'jquery'], (Field, $) 
 
 		postRender: ->
 			@searchField = @$('input[type="text"]')
+			@searchField.attr('autocomplete', 'off')
 			# Set up the typeahead
 			@searchField.typeahead
 				# Having the source with ID + label is a little
 				# hackish, so we do it with @@@@, assuming
 				# no label or id will have @@@@
 				source: (query, process) =>
+					console.log 'typing...'
+					if @options.onStartTyping and typeof @options.onStartTyping is 'function'
+						@options.onStartTyping
 					$.getJSON @options.dataSourceUrl,{q:query}, (response) =>
 						results = []
-
+						console.log 'got response:', response
 						for result in response
 							# Make sure the id is not already chosen
-							if @value and @value.id isnt result.id
-								results.push(result.id + '@@@@' + result.label)
+							results.push(result.id + '@@@@' + result.label)
+
 						process(results)
 				# Here we basically shift off the "id" portion
 				# and are left with the label for display
@@ -90,6 +94,8 @@ define ['core/ui/bootstrap/bootstrap', 'core/form/field', 'jquery'], (Field, $) 
 					# This is run when they click, so add the value
 					@value = {id:id, label:label}
 
+					if @options.onSelect and typeof @options.onSelect is 'function'
+						@options.onSelect(@value)
 					return label
 
 			
@@ -101,9 +107,10 @@ define ['core/ui/bootstrap/bootstrap', 'core/form/field', 'jquery'], (Field, $) 
 
 		populateSelf: ->
 			property = @options.property
-			val = @model.get(property)
-			if typeof val is 'object'
-				@value = val
-				@searchField.val(val.label)
+			if @model
+				val = @model.get(property)
+				if typeof val is 'object'
+					@value = val
+					@searchField.val(val.label)
 
 

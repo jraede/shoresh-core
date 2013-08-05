@@ -22,6 +22,14 @@
         'click .submit': 'process'
       };
 
+      FormView.prototype.disable = function() {
+        return this.$('input,select,textarea').attr('disabled', 'disabled');
+      };
+
+      FormView.prototype.enable = function() {
+        return this.$('input,select,textarea').attr('disabled', false);
+      };
+
       FormView.prototype.displayError = function(field, error) {
         var fieldEl, label, message, p;
 
