@@ -4,6 +4,6 @@ define [], ->
 			multiplier = Math.pow(10, decimals);
 
 
-			number = Math.floor(parseFloat(number) * multiplier) / multiplier
+			number = Math.round(parseFloat(number) * multiplier) / multiplier
 
 			return number

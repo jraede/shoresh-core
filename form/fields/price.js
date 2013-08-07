@@ -15,11 +15,8 @@
       }
 
       Price.prototype.postRender = function() {
-        this.$('input').priceFormat({
-          prefix: '$',
-          thousandsSeparator: ','
-        });
-        return Price.__super__.postRender.apply(this, arguments);
+        Price.__super__.postRender.apply(this, arguments);
+        return this.$('input').priceMask();
       };
 
       Price.prototype.populateModel = function() {
@@ -37,7 +34,7 @@
         property = this.options.property;
         val = this.model.get(property);
         if (val) {
-          return this.$('input').val('$' + val);
+          return this.$('input').val(val);
         }
       };
 

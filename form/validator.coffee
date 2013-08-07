@@ -73,7 +73,7 @@ define [], ->
 			return if value.match(regex) then true else false
 
 		_rule_validUrl: (value) ->
-			regex = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+			regex = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi
 			return @_rule_matchRegex(value, regex)
 
 		_rule_matchField: (value, field) ->

@@ -16,10 +16,12 @@
 define ['core/form/fields/text', 'jquery', 'moment', 'core/date/bootstrap-datepicker/datepicker'], (Text, $, moment) ->
 	class BootstrapDate extends Text
 		postRender:->
+			
+			super
 			@$('input').datepicker
 				format:@options.displayFormat
 				autoclose:true
-			super
+			@$('input').datepicker('update')
 		populateModel: ->
 			date = moment(@$('input').datepicker('getDate'))
 			property = @options.property

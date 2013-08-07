@@ -32,11 +32,12 @@
       }
 
       BootstrapDate.prototype.postRender = function() {
+        BootstrapDate.__super__.postRender.apply(this, arguments);
         this.$('input').datepicker({
           format: this.options.displayFormat,
           autoclose: true
         });
-        return BootstrapDate.__super__.postRender.apply(this, arguments);
+        return this.$('input').datepicker('update');
       };
 
       BootstrapDate.prototype.populateModel = function() {

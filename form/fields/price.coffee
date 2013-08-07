@@ -2,10 +2,9 @@
 define ['core/form/fields/text', 'jquery','core/form/priceMask'], (Text, $) ->
 	class Price extends Text
 		postRender:->
-			@$('input').priceFormat
-				prefix: '$'
-				thousandsSeparator: ','
+			
 			super
+			@$('input').priceMask()
 
 
 		populateModel: ->
@@ -23,4 +22,4 @@ define ['core/form/fields/text', 'jquery','core/form/priceMask'], (Text, $) ->
 			property = @options.property
 			val = @model.get(property)
 			if val
-				@$('input').val('$' + val)
+				@$('input').val(val)
