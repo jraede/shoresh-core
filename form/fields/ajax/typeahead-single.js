@@ -91,10 +91,11 @@
               var result, results, _i, _len;
 
               results = [];
-              console.log('got response:', response);
-              for (_i = 0, _len = response.length; _i < _len; _i++) {
-                result = response[_i];
-                results.push(result.id + '@@@@' + result.label);
+              if (response.length) {
+                for (_i = 0, _len = response.length; _i < _len; _i++) {
+                  result = response[_i];
+                  results.push(result.id + '@@@@' + result.label);
+                }
               }
               return process(results);
             });

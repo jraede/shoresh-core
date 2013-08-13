@@ -74,10 +74,10 @@ define ['core/form/field', 'jquery', 'core/ui/bootstrap/typeahead'], (Field, $) 
 						@options.onStartTyping
 					$.getJSON @options.dataSourceUrl,{q:query}, (response) =>
 						results = []
-						console.log 'got response:', response
-						for result in response
-							# Make sure the id is not already chosen
-							results.push(result.id + '@@@@' + result.label)
+						if response.length
+							for result in response
+								# Make sure the id is not already chosen
+								results.push(result.id + '@@@@' + result.label)
 
 						process(results)
 				# Here we basically shift off the "id" portion
