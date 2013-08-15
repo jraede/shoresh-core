@@ -7,19 +7,24 @@ define ['core/form/fields/text', 'jquery','core/form/priceMask'], (Text, $) ->
 			@$('input').priceMask()
 
 
-		populateModel: ->
+
+		getValue: ->		
 			price = @$('input').val()
+
+			return price.replace(/[^0-9\.]/g, '')
+		populateModel: ->
 
 
 			property = @options.property
 
-			@model.set(property, price.replace(/[^0-9\.]/g, ''))
+			@model.set(property, @getValue())
 
 
 		populateSelf: ->
-			apiFormat = @options.apiFormat
+			if @model
+				apiFormat = @options.apiFormat
 
-			property = @options.property
-			val = @model.get(property)
-			if val
-				@$('input').val(val)
+				property = @options.property
+				val = @model.get(property)
+				if val
+					@$('input').val(val)

@@ -22,20 +22,25 @@ define ['core/form/fields/text', 'jquery', 'moment', 'core/date/bootstrap-datepi
 				format:@options.displayFormat
 				autoclose:true
 			@$('input').datepicker('update')
-		populateModel: ->
+		getValue: (format = null)->
+			if !format
+				format = @options.apiFormat
 			date = moment(@$('input').datepicker('getDate'))
 			property = @options.property
 			if date
-				apiFormat = @options.apiFormat
-				converted = date.format(apiFormat)
-				@model.set(property, converted)
+				converted = date.format(format)
+				return converted
 			else
-				@model.set(property, null)
+				return null
+			
 
 		populateSelf: ->
+			if !@model then return
 			apiFormat = @options.apiFormat
 
 			property = @options.property
+
+
 			val = @model.get(property)
 			if val
 				date = moment(val, apiFormat)

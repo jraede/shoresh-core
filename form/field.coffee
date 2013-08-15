@@ -24,10 +24,10 @@ define ['backbone', 'core/form/validator'], (Backbone, Validator)->
 			@model.set(property, @getValue())
 
 		populateSelf: ->
-			console.log 'running populate self'
-			property = @options.property
-			val = @model.get(property)
-			@$('input').val(val)
+			if @model
+				property = @options.property
+				val = @model.get(property)
+				@$('input').val(val)
 
 		displayErrors: (errors) ->
 			for error in errors
