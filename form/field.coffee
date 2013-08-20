@@ -15,7 +15,6 @@ define ['backbone', 'core/form/validator'], (Backbone, Validator)->
 			return @$el.find('input').val()
 
 		postRender: ->
-			console.log 'running post render on', @
 			@populateSelf()
 			# add anything you want here
 		

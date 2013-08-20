@@ -68,19 +68,17 @@ define ['jquery', 'core/form/field', 'backbone', 'core/ui/template'], ($, Field,
 						@addNewModel(obj)
 
 		addNewModel: (attr)->
-
 			ModelClass = @options.modelClass
 			if !(attr instanceof ModelClass)
 				model = new ModelClass
 
 				if attr and typeof attr is 'object'
-					for key,val in attr
+					for key,val of attr
 						model.set(key, val)
 			else
 				model = attr
 			@collection.add(model)
 		showNewModel:(model)->
-			console.log model
 			if @options.template
 				Template.load @options.template, (view) =>
 					view = $('<li class="list-group-item"/>').css('position', 'relative').html(_.template view).prependTo(@ul)

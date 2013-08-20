@@ -35,7 +35,6 @@
       };
 
       Field.prototype.postRender = function() {
-        console.log('running post render on', this);
         return this.populateSelf();
       };
 
