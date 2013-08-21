@@ -18,7 +18,6 @@ define ['jquery', 'backbone'], ($, Backbone) ->
 			@$el.empty()
 			totalPages = @collection.info().totalPages
 			currentPage = @collection.currentPage
-
 			if totalPages < 2
 				return
 
@@ -56,8 +55,10 @@ define ['jquery', 'backbone'], ($, Backbone) ->
 
 				else if max > totalPages
 					diff = max - totalPages
-					min = min + diff
+					min = min - diff
 					max = totalPages
+
+			
 
 			# Draw the page buttons
 			for i in [min..max] by 1

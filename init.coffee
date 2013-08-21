@@ -25,7 +25,8 @@ if window.shoreshConfig and window.shoreshConfig.fileExtensions is true
 	else
 		explode.push('index')
 
-
+else if !explode.length
+	explode.push('index')
 requirejs.onError = (err) ->
 	if err.requireModules[0].indexOf('app/controllers/') isnt 0
 		throw err
