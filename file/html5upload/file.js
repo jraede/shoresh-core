@@ -70,6 +70,7 @@
         xhr.addEventListener('load', function(data) {
           return _this.complete($.parseJSON(xhr.responseText), xhr.status);
         }, false);
+        this.set('status', 'uploading');
         xhr.open('POST', this.collection.params.url);
         xhr.setRequestHeader('X_FILENAME', this.get('name'));
         return xhr.send(this.get('file'));

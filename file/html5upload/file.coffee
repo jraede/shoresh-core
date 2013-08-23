@@ -50,6 +50,8 @@ define ['jquery', 'backbone'], ($, Backbone) ->
 			xhr.addEventListener 'load', (data) =>
 				@complete($.parseJSON(xhr.responseText), xhr.status)
 			, false
+
+			@set('status', 'uploading')
 			xhr.open('POST', @collection.params.url)
 			xhr.setRequestHeader 'X_FILENAME', @get('name')
 			xhr.send(@get('file'))
