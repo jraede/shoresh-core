@@ -1,5 +1,6 @@
 define ['core/number/helper'], (NumberHelper) ->
 	format = (number, decimals) ->
+
 		if !number
 			final = '0'
 			if decimals
@@ -8,9 +9,20 @@ define ['core/number/helper'], (NumberHelper) ->
 					final += '0'
 			return final
 
-		val = number.toString().replace(/[^0-9\.]/g, '')
-		number = NumberHelper.round(parseFloat(val), decimals)
+			
+		val = number.toString().replace(/[^0-9\.\-]/g, '')
+
+		if val.substr(0,1) is '-'
+			isNegative = true
+			val = (parseFloat(val) * -1).toString()
+		else
+			isNegative = false
+
 		
+
+		
+		val = NumberHelper.round(parseFloat(val), decimals).toString()
+
 		index = val.indexOf('.')
 		if index >= 0
 			if val.length - (index + 1) is 1
@@ -30,9 +42,11 @@ define ['core/number/helper'], (NumberHelper) ->
 				newVal += ','
 			
 		newVal = newVal.split('').reverse().join('')
-
 		final = newVal
 		if split[1]
 			final += '.' + split[1]
+
+		if isNegative
+			final = '-' + final
 
 		return final

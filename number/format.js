@@ -4,7 +4,7 @@
     var format;
 
     return format = function(number, decimals) {
-      var final, i, index, key, newVal, split, val, whole, _i, _j, _ref;
+      var final, i, index, isNegative, key, newVal, split, val, whole, _i, _j, _ref;
 
       if (!number) {
         final = '0';
@@ -16,8 +16,14 @@
         }
         return final;
       }
-      val = number.toString().replace(/[^0-9\.]/g, '');
-      number = NumberHelper.round(parseFloat(val), decimals);
+      val = number.toString().replace(/[^0-9\.\-]/g, '');
+      if (val.substr(0, 1) === '-') {
+        isNegative = true;
+        val = (parseFloat(val) * -1).toString();
+      } else {
+        isNegative = false;
+      }
+      val = NumberHelper.round(parseFloat(val), decimals).toString();
       index = val.indexOf('.');
       if (index >= 0) {
         if (val.length - (index + 1) === 1) {
@@ -40,6 +46,9 @@
       final = newVal;
       if (split[1]) {
         final += '.' + split[1];
+      }
+      if (isNegative) {
+        final = '-' + final;
       }
       return final;
     };
