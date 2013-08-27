@@ -1,6 +1,10 @@
 
-require ['core/utilities'], -.
+require ['core/utilities'], ->
 	_log.bootTime = new Date().getTime()
+
+# Initialize the template engine
+require ['core/ui/template'], (Template) ->
+	Template.init()
 	
 # Look for the page controller and try to load it
 

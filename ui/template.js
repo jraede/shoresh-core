@@ -2,14 +2,15 @@
 /*
  * This class handles the loading of template files for use with
  * underscores templating engine. It stores them in a cache
- * so they are only loaded once per page load (and you can
+ * so they are only loaded once per page load, and you can
  * also specify browser caching on the server-end to increase
- * load time)
+ * load time. Or, better, you can bootstrap templates in the initial
+ * page load and this class will load them all automatically
  *
  * You can set the templateFormat method to be whatever you want
  *
  * @author  Jason Raede
- * @package  Shoresh
+ * @package  Shoresh Core
  * @subpackage  UI
 */
 
@@ -20,6 +21,30 @@
 
     return Template = (function() {
       function Template() {}
+
+      /*
+      		 * Load all scripts with data-template properties into the cache
+      		 * so we don't need to look each time with jquery and slow things down
+      */
+
+
+      Template.init = function() {
+        var _this = this;
+
+        return $(function() {
+          var self;
+
+          self = _this;
+          return $('script[data-template]').each(function() {
+            var template;
+
+            template = $(this).attr('data-template');
+            return self.cache[template] = $(this).html();
+          });
+        });
+      };
+
+      Template.cache = {};
 
       Template.currentlyLoading = [];
 
@@ -60,8 +85,6 @@
           });
         }
       };
-
-      Template.cache = {};
 
       return Template;
 
