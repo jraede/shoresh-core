@@ -63,7 +63,7 @@
                 return success(response);
               }
             } else if (invalid) {
-              __.log('doing invalid');
+              _log('Invalid CSRF token request');
               return invalid(response);
             }
           },

@@ -1,5 +1,7 @@
 
-
+require ['core/utilities'], -.
+	_log.bootTime = new Date().getTime()
+	
 # Look for the page controller and try to load it
 
 

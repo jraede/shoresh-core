@@ -53,7 +53,7 @@ define ['jquery'], ($) ->
 
 						if success then success(response)
 					else if invalid
-						__.log 'doing invalid'
+						_log 'Invalid CSRF token request'
 						invalid(response)
 				error: (xhr) =>
 
