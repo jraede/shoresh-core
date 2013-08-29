@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>core/init</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h1">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1>core/init</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p><strong>Package</strong>: Shoresh</p>
+<p><strong>Subpackage</strong>: Core</p>
+<p><strong>Author</strong>: Jason Raede <a href="&#109;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#x6a;&#x61;&#115;&#111;&#x6e;&#x2e;&#114;&#x61;&#101;&#100;&#101;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#109;">&#x6a;&#x61;&#115;&#111;&#x6e;&#x2e;&#114;&#x61;&#101;&#100;&#101;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#109;</a></p>
+<p>This file initializes the framework by loading global utilities and looking for the page controller.</p>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Load the utilities since they are used across the board for every page load.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>require [<span class="string">'core/utilities'</span>], -&gt;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Set the boot time on the logger so it can report accurately</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	_log.bootTime = <span class="keyword">new</span> Date().getTime()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Now we look for the page controller and try to load it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>path = window.location.pathname</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>If there&#39;s no file extension, we assume it&#39;s a folder. Otherwise strip the extension and use that</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>explode = path.split(<span class="string">'/'</span>)
+count = explode.length
+<span class="keyword">if</span> !explode[count - <span class="number">1</span>].length
+	explode.splice(count - <span class="number">1</span>, <span class="number">1</span>)
+
+
+<span class="keyword">if</span> !explode[<span class="number">0</span>].length
+	explode.splice(<span class="number">0</span>, <span class="number">1</span>)
+pathToCheck = explode[explode.length - <span class="number">1</span>]</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>If your Shoresh configuration allows file extensions, we assume that paths without an extension resolve to <code>index</code>. Otherwise if you&#39;re using some sort of mod-rewrite rule and are not using file extensions, set <code>fileExtensions</code> to <code>false</code> and it will just look for the file with <code>.js</code> appended to the current path.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="keyword">if</span> window.shoreshConfig <span class="keyword">and</span> window.shoreshConfig.fileExtensions <span class="keyword">is</span> <span class="literal">true</span>
+	<span class="keyword">if</span> pathToCheck.indexOf(<span class="string">'.'</span>) &gt;= <span class="number">0</span>
+
+		explode[explode.length - <span class="number">1</span>] = pathToCheck.substr(<span class="number">0</span>, pathToCheck.lastIndexOf(<span class="string">'.'</span>))
+	<span class="keyword">else</span>
+		explode.push(<span class="string">'index'</span>)
+
+<span class="keyword">else</span> <span class="keyword">if</span> !explode.length
+	explode.push(<span class="string">'index'</span>)
+requirejs.<span class="function"><span class="title">onError</span></span> = (err) -&gt;
+	<span class="keyword">if</span> err.requireModules[<span class="number">0</span>].indexOf(<span class="string">'app/controllers/'</span>) <span class="keyword">isnt</span> <span class="number">0</span>
+		<span class="keyword">throw</span> err
+
+
+require [<span class="string">'app/controllers/'</span> + explode.join(<span class="string">'/'</span>)]</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

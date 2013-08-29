@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>core/ui/template</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h1">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1>core/ui/template</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p><strong>Package</strong>: Shoresh</p>
+<p><strong>Subpackage</strong>: Core</p>
+<p><strong>Author</strong>: Jason Raede <a href="&#109;&#x61;&#105;&#108;&#x74;&#x6f;&#x3a;&#x6a;&#97;&#x73;&#111;&#x6e;&#x2e;&#x72;&#x61;&#x65;&#100;&#x65;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#99;&#x6f;&#109;">&#x6a;&#97;&#x73;&#111;&#x6e;&#x2e;&#x72;&#x61;&#x65;&#100;&#x65;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#99;&#x6f;&#109;</a></p>
+<p>This class handles the loading of template files for use with underscore&#39;s template engine. You can either load them via AJAX on an as-needed basis, or (recommended) bootstrap them onto your pages so there is no wait time before they are loaded. All templates are stored in a cache so they are only loaded a maximum of one time per page load</p>
+<p>If you do serve them dynamically via AJAX, it is recommended to also set some sort of browser caching header on the files or whatever you use to serve them to speed up the process.</p>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define [<span class="string">'jquery'</span>,<span class="string">'underscore'</span>], ($, _) -&gt;
+	<span class="class"><span class="keyword">class</span> <span class="title">Template</span> </span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Here we load all bootstrapped templates into the cache so we don&#39;t have to look each time with jQuery and slow things down.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="property">@init</span>: -&gt;
+			$ =&gt;
+				self = @
+				$(<span class="string">'script[data-template]'</span>).each -&gt;
+					template = $(@).attr(<span class="string">'data-template'</span>)
+					self.cache[template] = $(@).html()
+		<span class="property">@cache</span>:{}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>If you try to load a template that is in this <code>currentlyLoading</code> array, the specified callback will just be added to the stack (no need to load the template twice).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="property">@currentlyLoading</span>:[]
+		<span class="property">@currentlyLoadingCallbacks</span>:{}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>You can set the <code>templateFormat</code> option on <code>window.shoreshConfig</code> to whatever you want; it is used to generate the full URLs for loading named templates.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="property">@templateFormat</span>: (template) -&gt;
+			<span class="keyword">if</span> window.shoreshConfig <span class="keyword">and</span> window.shoreshConfig.templateFormat
+				<span class="keyword">return</span> window.shoreshConfig.templateFormat(template)
+
+			<span class="keyword">return</span> <span class="string">'/includes/templates/'</span> + template + <span class="string">'.php'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>This is the only method you will use. Here you load a template, and either retrieve it from the cache or load it by using the URL generated when passing the <code>template</code> variable to the <code>templateFormat</code> method above. If a template is in the middle of being loaded, just add the specified <code>callback</code> to the stack, and then run all callbacks for that template in order once it has been loaded.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="property">@load</span>: (template,callback) -&gt;
+			view = <span class="property">@cache</span>[template]
+			<span class="keyword">if</span> view
+				callback(view)
+			<span class="keyword">else</span> <span class="keyword">if</span> <span class="property">@currentlyLoading</span>.indexOf(template) &gt;= <span class="number">0</span>
+				<span class="property">@currentlyLoadingCallbacks</span>[template].push(callback)
+			<span class="keyword">else</span>
+				<span class="property">@currentlyLoading</span>.push(template)
+				<span class="property">@currentlyLoadingCallbacks</span>[template] = []
+				$.get <span class="property">@templateFormat</span>(template), (view) =&gt;
+					<span class="property">@cache</span>[template] = view
+
+					<span class="keyword">for</span> queuedCallback <span class="keyword">in</span> <span class="property">@currentlyLoadingCallbacks</span>[template]
+						queuedCallback(view)
+
+					index = <span class="property">@currentlyLoading</span>.indexOf(template)
+					<span class="property">@currentlyLoading</span>.splice(index, <span class="number">1</span>)
+					<span class="property">@currentlyLoadingCallbacks</span>[template] = []
+
+					callback(view)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Run <code>init</code> only the first time this script is required in.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	Template.init()</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
