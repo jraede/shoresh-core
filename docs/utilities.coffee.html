@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>core/utilities</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h1">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1>core/utilities</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p><strong>Package</strong>: Shoresh</p>
+<p><strong>Subpackage</strong>: Core</p>
+<p>This file contains all global utility methods used throughout Shoresh and its packages.</p>
+<hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define [], -&gt;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <h2>_log</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>You can log output to the console with <code>_log.info</code> or <code>_log.error</code> and not have to worry about commenting it all out when you push your app to production. Just set <code>debug</code> to <code>false</code> in the configuration and nothing will be logged.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	window._log =</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h3">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <h3>_log.microtime</h3>
+<p>Get the # of seconds + milliseconds since page load</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		microtime: -&gt;
+
+			unixtime_ms = <span class="keyword">new</span> Date().getTime()
+			diff = unixtime_ms - <span class="property">@bootTime</span>
+
+			<span class="keyword">return</span> (diff/<span class="number">1000</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h3">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <h3>_log.log</h3>
+<p>Log a variable number of arguments to the console</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		log: -&gt;
+			<span class="keyword">if</span> shoreshConfig.debug <span class="keyword">is</span> <span class="literal">true</span>
+				console.log <span class="string">'LOG ['</span> + <span class="property">@microtime</span>().toString() + <span class="string">'] '</span>, arguments</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h3">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <h3>_log.error</h3>
+<p>Log a variable number of arguments to the console as errors</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		error: -&gt;
+			<span class="keyword">if</span> shoresnConfig.debug <span class="keyword">is</span> <span class="literal">true</span>
+				console.error <span class="string">'ERROR ['</span> + <span class="property">@microtime</span>().toString() + <span class="string">'] '</span>, arguments</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <h2>inflector</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>This is based on FuelPHP&#39;s awesome <code>Inflector</code> class and is used to manipulate strings and convert them between formats.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	window.inflector =</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h3">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <h3>inflector.camelize</h3>
+<p>Convert a snake_case string to CamelCase</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		camelize: (string) -&gt;
+			length = string.length - <span class="number">1</span>
+			returnString = <span class="string">''</span>
+			<span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">0.</span>.length] <span class="keyword">by</span> <span class="number">1</span>
+				<span class="keyword">if</span> string[i] <span class="keyword">is</span> string[i].toUpperCase()
+					returnString += <span class="string">'_'</span> + string[i].toLowerCase()
+				<span class="keyword">else</span>
+					returnString += string[i]
+			<span class="keyword">return</span> returnString</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h3">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <h3>inflector.humanize</h3>
+<p>Convert a snake_case string to human-readable, with spaces and capital letters</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		humanize: (string) -&gt;
+			length = string.length - <span class="number">1</span>
+			returnString = string[<span class="number">0</span>].toUpper()
+			<span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">1.</span>.length] <span class="keyword">by</span> <span class="number">1</span>
+
+				<span class="keyword">if</span> string[i] <span class="keyword">is</span> <span class="string">'_'</span> <span class="keyword">or</span> string[i] <span class="keyword">is</span> <span class="string">'-'</span>
+					returnString += <span class="string">' '</span>
+				<span class="keyword">else</span>
+					returnString += string[i]
+
+			<span class="keyword">return</span> returnString</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h3">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <h3>inflector.ordinalize</h3>
+<p>Add a suffix to a number</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		ordinalize: (n) -&gt;
+			n = n.toString()
+			last = n[n.length - <span class="number">1</span>]
+			<span class="keyword">if</span> !isNaN(parseInt(n)) &amp;&amp; isFinite(n)
+				<span class="keyword">if</span> last <span class="keyword">is</span> <span class="string">'1'</span>
+					<span class="keyword">return</span> n + <span class="string">'st'</span>
+				<span class="keyword">else</span> <span class="keyword">if</span> last <span class="keyword">is</span> <span class="string">'2'</span>
+					<span class="keyword">return</span> n + <span class="string">'nd'</span>
+				<span class="keyword">else</span> <span class="keyword">if</span> last <span class="keyword">is</span> <span class="string">'3'</span>
+					<span class="keyword">return</span> n + <span class="string">'rd'</span>
+				<span class="keyword">else</span>
+					<span class="keyword">return</span> n + <span class="string">'th'</span>
+			<span class="keyword">else</span>
+				<span class="keyword">return</span> n</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <h2>formatString</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Takes a format and runs a string through it to create a formatted string. 
+E.g. <code>formatString(&#39;5551234567&#39;, &#39;(XXX) XXX-XXXX&#39;)</code> will yield <code>&#39;(555) 123-4567&#39;</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	window.<span class="function"><span class="title">formatString</span></span> = (string, format) -&gt;
+		length = string.length - <span class="number">1</span>
+		<span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">0.</span>.length] <span class="keyword">by</span> <span class="number">1</span>
+			format = format.replace(<span class="regexp">/X/</span>, string[i])
+
+		<span class="keyword">return</span> format</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <h2>roundNumber</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Round a number to the desired number of decimal places</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	window.<span class="function"><span class="title">roundNumber</span></span> = (number, decimals = <span class="number">0</span>) -&gt;
+		multiplier = Math.pow(<span class="number">10</span>, decimals);
+
+
+		number = Math.round(parseFloat(number) * multiplier) / multiplier
+
+		<span class="keyword">return</span> number</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <h2>formatNumber</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Format a number by rounding to specified decimal places and adding commas for the thousands.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	window.<span class="function"><span class="title">formatNumber</span></span> = (number, decimals) -&gt;
+
+		<span class="keyword">if</span> !number
+			final = <span class="string">'0'</span>
+			<span class="keyword">if</span> decimals
+				final += <span class="string">'.'</span>
+				<span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">1.</span>.decimals] <span class="keyword">by</span> <span class="number">1</span>
+					final += <span class="string">'0'</span>
+			<span class="keyword">return</span> final
+
+
+		val = number.toString().replace(<span class="regexp">/[^0-9\.\-]/g</span>, <span class="string">''</span>)
+
+		<span class="keyword">if</span> val.substr(<span class="number">0</span>,<span class="number">1</span>) <span class="keyword">is</span> <span class="string">'-'</span>
+			isNegative = <span class="literal">true</span>
+			val = (parseFloat(val) * -<span class="number">1</span>).toString()
+		<span class="keyword">else</span>
+			isNegative = <span class="literal">false</span>
+
+
+
+
+		val = roundNumber(parseFloat(val), decimals).toString()
+
+		index = val.indexOf(<span class="string">'.'</span>)
+		<span class="keyword">if</span> index &gt;= <span class="number">0</span>
+			<span class="keyword">if</span> val.length - (index + <span class="number">1</span>) <span class="keyword">is</span> <span class="number">1</span>
+				val = val + <span class="string">'0'</span>
+		<span class="keyword">else</span>
+			val = val + <span class="string">'.00'</span>
+
+		split = val.split(<span class="string">'.'</span>)
+		whole = split[<span class="number">0</span>].split(<span class="string">''</span>).reverse().join(<span class="string">''</span>)
+		newVal = <span class="string">''</span>
+		<span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">1.</span>.whole.length] <span class="keyword">by</span> <span class="number">1</span>
+			key = i-<span class="number">1</span>
+
+			newVal += whole[key]
+			<span class="keyword">if</span> !(i%<span class="number">3</span>) <span class="keyword">and</span> i <span class="keyword">isnt</span> whole.length
+				newVal += <span class="string">','</span>
+
+		newVal = newVal.split(<span class="string">''</span>).reverse().join(<span class="string">''</span>)
+		final = newVal
+		<span class="keyword">if</span> split[<span class="number">1</span>]
+			final += <span class="string">'.'</span> + split[<span class="number">1</span>]
+
+		<span class="keyword">if</span> isNegative
+			final = <span class="string">'-'</span> + final
+
+		<span class="keyword">return</span> final</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
