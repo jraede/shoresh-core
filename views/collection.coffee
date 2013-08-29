@@ -11,6 +11,8 @@ define ['backbone', 'core/views/modelRow'], (Backbone, TableRowView) ->
 				model: obj
 				tagName: 'tr'
 				id:@idPrefix+ obj.get('id')
+			if !view.template
+				view.options.template = @options.modelTemplate
 
 			index = @collection.indexOf(obj)
 			before = @$('tr:eq(' + index.toString() + ')')

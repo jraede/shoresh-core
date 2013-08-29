@@ -1,4 +1,4 @@
-define [] ->
+define [], ->
 	window._log = 
 		microtime: ->
 				
@@ -7,7 +7,7 @@ define [] ->
 
 			return (diff/1000)
 
-		log: ->
+		info: ->
 			if shoreshConfig.debug is true
 				console.log 'LOG [' + @microtime().toString() + '] ', arguments
 		
