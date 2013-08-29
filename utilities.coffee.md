@@ -38,7 +38,7 @@ Log a variable number of arguments to the console
 Log a variable number of arguments to the console as errors
 
 			error: ->
-				if shoresnConfig.debug is true
+				if shoreshConfig.debug is true
 					console.error 'ERROR [' + @microtime().toString() + '] ', arguments
 
 inflector

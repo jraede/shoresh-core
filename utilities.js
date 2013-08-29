@@ -9,7 +9,7 @@
         return diff / 1000;
       },
       error: function() {
-        if (shoresnConfig.debug === true) {
+        if (shoreshConfig.debug === true) {
           return console.error('ERROR [' + this.microtime().toString() + '] ', arguments);
         }
       }
