@@ -7,6 +7,7 @@ define ['backbone', 'core/views/modelRow'], (Backbone, TableRowView) ->
 		idPrefix:'obj-'
 		modelView:TableRowView
 		addNew: (obj) ->
+			_log.info 'adding', obj
 			view = new @modelView
 				model: obj
 				tagName: 'tr'

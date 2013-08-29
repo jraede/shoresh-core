@@ -44,11 +44,13 @@ This is the only method you will use. Here you load a template, and either retri
 
 			@load: (template,callback) ->
 				view = @cache[template]
+
 				if view
 					callback(view)
 				else if @currentlyLoading.indexOf(template) >= 0
 					@currentlyLoadingCallbacks[template].push(callback)
 				else
+					_log.info 'got view from cache: ', view
 					@currentlyLoading.push(template)
 					@currentlyLoadingCallbacks[template] = []
 					$.get @templateFormat(template), (view) =>
@@ -66,5 +68,7 @@ This is the only method you will use. Here you load a template, and either retri
 Run `init` only the first time this script is required in.
 
 		Template.init()
+
+		return Template
 
 		

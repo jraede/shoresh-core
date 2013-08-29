@@ -28,9 +28,10 @@ Get the # of seconds + milliseconds since page load
 				diff = unixtime_ms - @bootTime
 
 				return (diff/1000)
-### _log.log
+### _log.info
 Log a variable number of arguments to the console
-			log: ->
+
+			info: ->
 				if shoreshConfig.debug is true
 					console.log 'LOG [' + @microtime().toString() + '] ', arguments
 			

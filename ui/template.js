@@ -40,6 +40,7 @@
         } else if (this.currentlyLoading.indexOf(template) >= 0) {
           return this.currentlyLoadingCallbacks[template].push(callback);
         } else {
+          _log.info('got view from cache: ', view);
           this.currentlyLoading.push(template);
           this.currentlyLoadingCallbacks[template] = [];
           return $.get(this.templateFormat(template), function(view) {
@@ -61,7 +62,8 @@
       return Template;
 
     })();
-    return Template.init();
+    Template.init();
+    return Template;
   });
 
 }).call(this);
