@@ -1,4 +1,4 @@
-define [] ->
+define [], ->
 	window._log = 
 		microtime: ->
 				
