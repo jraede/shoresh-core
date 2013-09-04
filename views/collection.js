@@ -14,8 +14,7 @@
       }
 
       CollectionView.prototype.initialize = function() {
-        this.listenTo(this.collection, 'add', this.addNew);
-        return this.listenTo(this.collection, 'sync', this.render);
+        return this.listenTo(this.collection, 'add', this.addNew);
       };
 
       CollectionView.prototype.idPrefix = 'obj-';
@@ -24,7 +23,6 @@
 
       CollectionView.prototype.addNew = function(obj) {
         var before, index, view;
-        _log.info('adding', obj);
         view = new this.modelView({
           model: obj,
           tagName: 'tr',

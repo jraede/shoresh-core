@@ -2,12 +2,11 @@ define ['backbone', 'core/views/modelRow'], (Backbone, TableRowView) ->
 	class CollectionView extends Backbone.View
 		initialize: ->
 			@listenTo(@collection, 'add', @addNew)
-			@listenTo(@collection, 'sync', @render)
+			#@listenTo(@collection, 'sync', @render)
 			#@listenTo(@collection, 'remove', @render)
 		idPrefix:'obj-'
 		modelView:TableRowView
 		addNew: (obj) ->
-			_log.info 'adding', obj
 			view = new @modelView
 				model: obj
 				tagName: 'tr'

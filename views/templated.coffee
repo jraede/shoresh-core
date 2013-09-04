@@ -4,7 +4,6 @@ define ['backbone', 'core/ui/template'], (Backbone, Template) ->
 			# Override this with custom setup
 		render: (callback) ->
 			@$el.empty()
-			_log.info 'TEMPLATE:', @options.template
 			Template.load @options.template, (view) =>
 				if @model
 					@$el.html _.template view, @model.toTemplate()
