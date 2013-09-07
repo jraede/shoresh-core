@@ -19,7 +19,7 @@ define ['core/views/templated', 'core/views/formModal'], (TemplatedView, FormMod
 
 		edit:(e) ->
 			if e then e.preventDefault()
-
+			_log.info 'edit modal with model:', @model
 			# Lazy generation of edit modal
 			if !@editModal
 				@editModal = new FormModal

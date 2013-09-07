@@ -8,6 +8,7 @@ define ['backbone', 'core/views/modelRow'], (Backbone, TableRowView) ->
 		modelView:TableRowView
 		addNew: (obj) ->
 			_log.info 'adding', obj
+			_log.info 'model view for collection is ', @modelView
 			view = new @modelView
 				model: obj
 				tagName: 'tr'
@@ -23,6 +24,7 @@ define ['backbone', 'core/views/modelRow'], (Backbone, TableRowView) ->
 				@$el.append view.render().el
 
 		render: ->
+			_log.info 'got sync event and rendering'
 			@$el.empty()
 			@collection.each (obj) =>
 				@addNew(obj)

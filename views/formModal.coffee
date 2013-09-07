@@ -4,7 +4,11 @@ define ['core/views/modal'], (ModalView) ->
 			'click .save':'save'
 		initialize: ->
 			@listenTo @model, 'sync', @hide
+			@listenTo @model, 'sync', @reloadCollection
 			super
+
+		reloadCollection:(model) ->
+			model.collection.fetch()
 		setup: ->
 			@formView = @model.generateForm(@$('.modal-body'))
 			@formView.render()
@@ -12,5 +16,6 @@ define ['core/views/modal'], (ModalView) ->
 		save: (e) ->
 			@formView.process e,
 				btn:@$('.save')
+
 
 

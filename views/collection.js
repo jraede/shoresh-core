@@ -25,6 +25,7 @@
       CollectionView.prototype.addNew = function(obj) {
         var before, index, view;
         _log.info('adding', obj);
+        _log.info('model view for collection is ', this.modelView);
         view = new this.modelView({
           model: obj,
           tagName: 'tr',
@@ -44,6 +45,7 @@
 
       CollectionView.prototype.render = function() {
         var _this = this;
+        _log.info('got sync event and rendering');
         this.$el.empty();
         return this.collection.each(function(obj) {
           return _this.addNew(obj);
