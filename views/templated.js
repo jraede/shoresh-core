@@ -26,6 +26,7 @@
           } else {
             _this.$el.html(_.template(view, _this.options.templateAttributes));
           }
+          _this.delegateEvents();
           _this.setup();
           if (callback && typeof callback === 'function') {
             return callback();

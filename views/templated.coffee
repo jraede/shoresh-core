@@ -12,6 +12,7 @@ define ['backbone', 'core/ui/template'], (Backbone, Template) ->
 				else
 					@$el.html _.template view, @options.templateAttributes
 
+				@delegateEvents()
 				@setup()
 
 				if callback and typeof(callback) is 'function' then callback()

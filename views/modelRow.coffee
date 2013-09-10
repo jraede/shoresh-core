@@ -1,4 +1,4 @@
-define ['core/views/templated', 'core/views/formModal'], (TemplatedView, FormModal) ->
+define ['core/views/templated', 'core/views/formModal','core/ui/bootstrap/tooltip'], (TemplatedView, FormModal, $) ->
 	class ModelRow extends TemplatedView
 		tagName:'tr'
 		events:
@@ -8,6 +8,11 @@ define ['core/views/templated', 'core/views/formModal'], (TemplatedView, FormMod
 			@listenTo(@model, 'sync', @render)
 		
 		deleteMessage:'Delete this object?'
+		delegateEvents: ->
+			# Apply tooltip, then super
+			@$('[title]').tooltip()
+
+			super
 		delete:(e)->
 			e.preventDefault()
 			if confirm(@deleteMessage)
@@ -19,7 +24,6 @@ define ['core/views/templated', 'core/views/formModal'], (TemplatedView, FormMod
 
 		edit:(e) ->
 			if e then e.preventDefault()
-			_log.info 'edit modal with model:', @model
 			# Lazy generation of edit modal
 			if !@editModal
 				@editModal = new FormModal

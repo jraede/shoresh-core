@@ -3,7 +3,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['core/views/templated', 'core/views/formModal'], function(TemplatedView, FormModal) {
+  define(['core/views/templated', 'core/views/formModal', 'core/ui/bootstrap/tooltip'], function(TemplatedView, FormModal, $) {
     var ModelRow, _ref;
     return ModelRow = (function(_super) {
       __extends(ModelRow, _super);
@@ -26,6 +26,11 @@
 
       ModelRow.prototype.deleteMessage = 'Delete this object?';
 
+      ModelRow.prototype.delegateEvents = function() {
+        this.$('[title]').tooltip();
+        return ModelRow.__super__.delegateEvents.apply(this, arguments);
+      };
+
       ModelRow.prototype["delete"] = function(e) {
         var _this = this;
         e.preventDefault();
@@ -45,7 +50,6 @@
         if (e) {
           e.preventDefault();
         }
-        _log.info('edit modal with model:', this.model);
         if (!this.editModal) {
           this.editModal = new FormModal({
             model: this.model,
