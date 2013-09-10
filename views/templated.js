@@ -18,8 +18,6 @@
       TemplatedView.prototype.render = function(callback) {
         var _this = this;
         this.$el.empty();
-        _log.info('TEMPLATE:', this.options.template);
-        _log.info('Making template:', this.model.toTemplate());
         Template.load(this.options.template, function(view) {
           if (_this.model) {
             _this.$el.html(_.template(view, _this.model.toTemplate()));
