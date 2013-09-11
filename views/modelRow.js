@@ -47,6 +47,7 @@
 
       ModelRow.prototype.edit = function(e) {
         var _this = this;
+        _log.info('running edit on model row');
         if (e) {
           e.preventDefault();
         }

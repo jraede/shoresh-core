@@ -23,6 +23,7 @@ define ['core/views/templated', 'core/views/formModal','core/ui/bootstrap/toolti
 						@remove()
 
 		edit:(e) ->
+			_log.info 'running edit on model row'
 			if e then e.preventDefault()
 			# Lazy generation of edit modal
 			if !@editModal
