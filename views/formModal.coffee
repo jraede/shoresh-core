@@ -8,9 +8,10 @@ define ['core/views/modal'], (ModalView) ->
 			super
 
 		reloadCollection:(model) ->
-			model.collection.fetch()
+			if model.collection?
+				model.collection.fetch()
 		setup: ->
-			@formView = @model.generateForm(@$('.modal-body'))
+			@formView = @model.generateForm(@$('.modal-body'), @options.formFields)
 			@formView.render()
 			_log.info @formView
 		save: (e) ->

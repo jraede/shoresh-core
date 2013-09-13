@@ -3,7 +3,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['core/views/templated', 'core/views/formModal', 'core/ui/bootstrap/tooltip'], function(TemplatedView, FormModal, $) {
+  define(['jquery', 'core/views/templated', 'core/views/formModal', 'core/ui/bootstrap/tooltip'], function($, TemplatedView, FormModal) {
     var ModelRow, _ref;
     return ModelRow = (function(_super) {
       __extends(ModelRow, _super);
@@ -47,7 +47,6 @@
 
       ModelRow.prototype.edit = function(e) {
         var _this = this;
-        _log.info('running edit on model row');
         if (e) {
           e.preventDefault();
         }
@@ -56,6 +55,9 @@
             model: this.model,
             template: this.options.template.replace('row', 'modal-form')
           });
+          if (this.formFields) {
+            this.editModal.options.formFields = this.formFields;
+          }
           return this.editModal.render(function() {
             return _this.editModal.show();
           }).$el.appendTo($('body'));

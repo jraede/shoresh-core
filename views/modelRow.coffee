@@ -1,4 +1,4 @@
-define ['core/views/templated', 'core/views/formModal','core/ui/bootstrap/tooltip'], (TemplatedView, FormModal, $) ->
+define ['jquery','core/views/templated', 'core/views/formModal','core/ui/bootstrap/tooltip'], ($, TemplatedView, FormModal) ->
 	class ModelRow extends TemplatedView
 		tagName:'tr'
 		events:
@@ -23,13 +23,14 @@ define ['core/views/templated', 'core/views/formModal','core/ui/bootstrap/toolti
 						@remove()
 
 		edit:(e) ->
-			_log.info 'running edit on model row'
 			if e then e.preventDefault()
 			# Lazy generation of edit modal
 			if !@editModal
 				@editModal = new FormModal
 					model:@model
 					template:@options.template.replace('row', 'modal-form')
+				if @formFields
+					@editModal.options.formFields = @formFields
 
 				@editModal.render =>
 					@editModal.show()

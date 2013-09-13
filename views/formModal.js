@@ -24,11 +24,13 @@
       };
 
       FormModal.prototype.reloadCollection = function(model) {
-        return model.collection.fetch();
+        if (model.collection != null) {
+          return model.collection.fetch();
+        }
       };
 
       FormModal.prototype.setup = function() {
-        this.formView = this.model.generateForm(this.$('.modal-body'));
+        this.formView = this.model.generateForm(this.$('.modal-body'), this.options.formFields);
         this.formView.render();
         return _log.info(this.formView);
       };
