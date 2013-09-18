@@ -14,7 +14,6 @@ and then calls the `sort` method.
 				'click .order-by':'changeOrder'
 
 			changeOrder:(e) ->
-				_log.info 'changing order!'
 				e.preventDefault()
 				column = $(e.currentTarget).attr('data-column')
 				isDate = $(e.currentTarget).attr('data-is-date')
@@ -38,36 +37,59 @@ and then calls the `sort` method.
 				else
 					@$('.order-by[data-column="' + column + '"]').append('<i style="margin-left:10px;" class="icon-long-arrow-down"></i>')
 
-				_log.info direction
-				if Backbone.Paginator? and @collection instanceof Backbone.Paginator.requestPager
-					@collection.filters.sort_column = column
-					@collection.filters.sort_direction = direction
-					@collection.fetch()
-				else
-					_log.info 'Changing comparator'
-					@collection.comparator = (model1, model2) ->
+				@collection.comparator = (model1, model2) ->
+					if model1.sortStrategies and model1.sortStrategies[column]? and model2.sortStrategies and model2.sortStrategies[column]?
+						f = _.bind(model1.sortStrategies[column], model1)
+						model1Val = f()
+						_log.info 'model1 val is ', model1Val
+						f = _.bind(model2.sortStrategies[column], model2)
+						model2Val = f()
+					else if column.indexOf('.') > 0
+						column = column.split('.')
+						firstColumn = column.shift()
+						model1Val = model1.get(firstColumn)
+						model2Val = model2.get(firstColumn)
+						while column.length > 0
+							col = column.shift()
+							model1Val = model1Val[col]
+							model2Val = model2Val[col]
+					else
 						model1Val = model1.get(column)
 						model2Val = model2.get(column)
 
-						if isDate
-							model1Val = moment(model1Val).unix()
-							model2Val = moment(model2Val).unix()
-						else if !isNaN(parseFloat(model1Val)) and !isNaN(parseFloat(model2Val))
-							model1Val = parseFloat(model1Val)
-							model2Val = parseFloat(model2Val)
-							
+					if isDate
+						model1Val = moment(model1Val).unix()
+						model2Val = moment(model2Val).unix()
+					else if /^\d+$/.test(model1Val) and /^\d+$/.test(model2Val) and !isNaN(parseFloat(model1Val)) and !isNaN(parseFloat(model2Val))
+						model1Val = parseFloat(model1Val)
+						model2Val = parseFloat(model2Val)
+					
 
-						if model1Val < model2Val
-							sortVal = -1
-						else if model1Val > model2Val
-							sortVal = 1
-						else
-							sortVal = 0
+					if model1Val < model2Val
+						sortVal = -1
+					else if model1Val > model2Val
+						sortVal = 1
+					else
+						sortVal = 0
 
-						if direction is 'ASC'
-							return sortVal
-						else
-							return -1 * sortVal
+					if direction is 'ASC'
+						return sortVal
+					else
+						return -1 * sortVal
+
+				if Backbone.Paginator? and @collection instanceof Backbone.Paginator.requestPager
+					_log.info 'request pager!'
+					@collection.filters.sort_column = column
+					@collection.filters.sort_direction = direction
+					
+					@collection.fetch
+						#success:_.bind(@collection.sort, @collection)
+						success:=>
+							@collection.sort()
+						foo:'bar'
+
+				else
+					
 
 				
 					@collection.sort()
@@ -107,7 +129,6 @@ and then calls the `sort` method.
 					@$('tbody').append view.render().el
 
 			render: ->
-				_log.info 'rendering!'
 				@$('tbody').empty()
 				@collection.each (obj) =>
 					@addNew(obj)

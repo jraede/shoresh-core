@@ -66,7 +66,11 @@
       }
     };
     window.formatString = function(string, format) {
-      var i, length, _i;
+      var i, length, match, _i;
+      match = format.match(/X/g);
+      if (string.length !== match.length) {
+        return '';
+      }
       length = string.length - 1;
       for (i = _i = 0; _i <= length; i = _i += 1) {
         format = format.replace(/X/, string[i]);
