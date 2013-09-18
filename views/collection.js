@@ -14,7 +14,8 @@
       }
 
       CollectionView.prototype.initialize = function() {
-        return this.listenTo(this.collection, 'add', this.addNew);
+        this.listenTo(this.collection, 'add', this.addNew);
+        return this.listenTo(this.collection, 'sync', this.render);
       };
 
       CollectionView.prototype.idPrefix = 'obj-';
@@ -42,7 +43,7 @@
 
       CollectionView.prototype.render = function() {
         var _this = this;
-        _log.info('got sync event and rendering');
+        _log.info('RENDERING:', this.collection.models);
         this.$el.empty();
         return this.collection.each(function(obj) {
           return _this.addNew(obj);

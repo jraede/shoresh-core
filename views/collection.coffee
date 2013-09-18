@@ -2,7 +2,7 @@ define ['backbone', 'core/views/modelRow'], (Backbone, TableRowView) ->
 	class CollectionView extends Backbone.View
 		initialize: ->
 			@listenTo(@collection, 'add', @addNew)
-			#@listenTo(@collection, 'sync', @render)
+			@listenTo(@collection, 'sync', @render)
 			#@listenTo(@collection, 'remove', @render)
 		idPrefix:'obj-'
 		modelView:TableRowView
@@ -23,7 +23,7 @@ define ['backbone', 'core/views/modelRow'], (Backbone, TableRowView) ->
 				@$el.append view.render().el
 
 		render: ->
-			_log.info 'got sync event and rendering'
+			_log.info 'RENDERING:', @collection.models
 			@$el.empty()
 			@collection.each (obj) =>
 				@addNew(obj)

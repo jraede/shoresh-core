@@ -51,6 +51,7 @@ and then calls the `sort` method.
 						model2Val = model2.get(firstColumn)
 						while column.length > 0
 							col = column.shift()
+
 							model1Val = model1Val[col]
 							model2Val = model2Val[col]
 					else
