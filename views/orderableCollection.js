@@ -44,26 +44,27 @@
           this.$('.order-by[data-column="' + column + '"]').append('<i style="margin-left:10px;" class="icon-long-arrow-down"></i>');
         }
         this.collection.comparator = function(model1, model2) {
-          var col, f, firstColumn, model1Val, model2Val, sortVal;
-          if (model1.sortStrategies && (model1.sortStrategies[column] != null) && model2.sortStrategies && (model2.sortStrategies[column] != null)) {
-            f = _.bind(model1.sortStrategies[column], model1);
+          var col, columnToUse, f, firstColumn, model1Val, model2Val, sortVal;
+          columnToUse = column;
+          if (model1.sortStrategies && (model1.sortStrategies[columnToUse] != null) && model2.sortStrategies && (model2.sortStrategies[columnToUse] != null)) {
+            f = _.bind(model1.sortStrategies[columnToUse], model1);
             model1Val = f();
             _log.info('model1 val is ', model1Val);
-            f = _.bind(model2.sortStrategies[column], model2);
+            f = _.bind(model2.sortStrategies[columnToUse], model2);
             model2Val = f();
-          } else if (column.indexOf('.') > 0) {
-            column = column.split('.');
-            firstColumn = column.shift();
+          } else if (columnToUse.indexOf('.') > 0) {
+            columnToUse = columnToUse.split('.');
+            firstColumn = columnToUse.shift();
             model1Val = model1.get(firstColumn);
             model2Val = model2.get(firstColumn);
-            while (column.length > 0) {
-              col = column.shift();
+            while (columnToUse.length > 0) {
+              col = columnToUse.shift();
               model1Val = model1Val[col];
               model2Val = model2Val[col];
             }
           } else {
-            model1Val = model1.get(column);
-            model2Val = model2.get(column);
+            model1Val = model1.get(columnToUse);
+            model2Val = model2.get(columnToUse);
           }
           if (isDate) {
             model1Val = moment(model1Val).unix();
@@ -72,6 +73,7 @@
             model1Val = parseFloat(model1Val);
             model2Val = parseFloat(model2Val);
           }
+          _log.info('comparing', model1Val, 'to', model2Val);
           if (model1Val < model2Val) {
             sortVal = -1;
           } else if (model1Val > model2Val) {

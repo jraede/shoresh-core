@@ -38,33 +38,35 @@ and then calls the `sort` method.
 					@$('.order-by[data-column="' + column + '"]').append('<i style="margin-left:10px;" class="icon-long-arrow-down"></i>')
 
 				@collection.comparator = (model1, model2) ->
-					if model1.sortStrategies and model1.sortStrategies[column]? and model2.sortStrategies and model2.sortStrategies[column]?
-						f = _.bind(model1.sortStrategies[column], model1)
+					columnToUse = column
+					if model1.sortStrategies and model1.sortStrategies[columnToUse]? and model2.sortStrategies and model2.sortStrategies[columnToUse]?
+						f = _.bind(model1.sortStrategies[columnToUse], model1)
 						model1Val = f()
 						_log.info 'model1 val is ', model1Val
-						f = _.bind(model2.sortStrategies[column], model2)
+						f = _.bind(model2.sortStrategies[columnToUse], model2)
 						model2Val = f()
-					else if column.indexOf('.') > 0
-						column = column.split('.')
-						firstColumn = column.shift()
+					else if columnToUse.indexOf('.') > 0
+						columnToUse = columnToUse.split('.')
+						firstColumn = columnToUse.shift()
 						model1Val = model1.get(firstColumn)
 						model2Val = model2.get(firstColumn)
-						while column.length > 0
-							col = column.shift()
+						while columnToUse.length > 0
+							col = columnToUse.shift()
 
 							model1Val = model1Val[col]
 							model2Val = model2Val[col]
 					else
-						model1Val = model1.get(column)
-						model2Val = model2.get(column)
+						model1Val = model1.get(columnToUse)
+						model2Val = model2.get(columnToUse)
 
 					if isDate
 						model1Val = moment(model1Val).unix()
 						model2Val = moment(model2Val).unix()
 					else if /^\d+$/.test(model1Val) and /^\d+$/.test(model2Val) and !isNaN(parseFloat(model1Val)) and !isNaN(parseFloat(model2Val))
+
 						model1Val = parseFloat(model1Val)
 						model2Val = parseFloat(model2Val)
-					
+					_log.info 'comparing', model1Val, 'to', model2Val
 
 					if model1Val < model2Val
 						sortVal = -1
