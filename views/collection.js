@@ -23,12 +23,16 @@
       CollectionView.prototype.modelView = TableRowView;
 
       CollectionView.prototype.addNew = function(obj) {
-        var before, index, view;
-        view = new this.modelView({
+        var before, index, options, view;
+        options = {
           model: obj,
           tagName: 'tr',
           id: this.idPrefix + obj.get('id')
-        });
+        };
+        if (this.options.modelViewConfig) {
+          options = _.extend(options, this.options.modelViewConfig);
+        }
+        view = new this.modelView(options);
         if (!view.template) {
           view.options.template = this.options.modelTemplate;
         }

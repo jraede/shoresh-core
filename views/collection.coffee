@@ -8,10 +8,15 @@ define ['backbone', 'core/views/modelRow'], (Backbone, TableRowView) ->
 		modelView:TableRowView
 		addNew: (obj) ->
 
-			view = new @modelView
-				model: obj
-				tagName: 'tr'
-				id:@idPrefix+ obj.get('id')
+			options = 
+				model:obj
+				tagName:'tr'
+				id:@idPrefix+obj.get('id')
+
+			if @options.modelViewConfig
+				options = _.extend(options, @options.modelViewConfig)
+			view = new @modelView options
+			
 			if !view.template
 				view.options.template = @options.modelTemplate
 

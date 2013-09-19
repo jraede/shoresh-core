@@ -48,10 +48,13 @@ If your Shoresh configuration allows file extensions, we assume that paths witho
 
 	else if !explode.length
 		explode.push('index')
-	requirejs.onError = (err) ->
-		if err.requireModules[0].indexOf('app/controllers/') isnt 0
-			throw err
+	#requirejs.onError = (err) ->
+	#	if err.requireModules[0].indexOf('app/controllers/') isnt 0
+	#		throw err
 
-	    
-	require ['app/controllers/' + explode.join('/')]
+	if window.shoreshConfig.controllerPath?
+		controllerPath = window.shoreshConfig.controllerPath + '/'
+	else
+		controllerPath = 'app/controllers/'
+	require [controllerPath + explode.join('/')]
 
