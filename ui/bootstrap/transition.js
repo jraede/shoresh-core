@@ -17,6 +17,7 @@
  * limitations under the License.
  * ======================================================================== */
 
+define(['jquery'], function($) {
 +function ($) { "use strict";
 
   // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
@@ -52,4 +53,4 @@
     $.support.transition = transitionEnd()
   })
 
-}(window.jQuery);
+}($)});
