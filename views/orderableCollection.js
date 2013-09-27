@@ -130,7 +130,8 @@
         var before, index, view;
         view = new this.modelView({
           model: obj,
-          tagName: 'tr',
+          tagName: 'div',
+          className: 'tr',
           id: this.idPrefix + obj.get('id')
         });
         if (!view.template) {
@@ -138,17 +139,17 @@
         }
         obj.tableRowView = view;
         index = this.collection.indexOf(obj);
-        before = this.$('tbody tr:eq(' + index.toString() + ')');
+        before = this.$('.tbody .tr:eq(' + index.toString() + ')');
         if (before.length) {
           return before.before(view.render().el);
         } else {
-          return this.$('tbody').append(view.render().el);
+          return this.$('.tbody').append(view.render().el);
         }
       };
 
       OrderableCollectionView.prototype.render = function() {
         var _this = this;
-        this.$('tbody').empty();
+        this.$('.tbody').empty();
         return this.collection.each(function(obj) {
           return _this.addNew(obj);
         });

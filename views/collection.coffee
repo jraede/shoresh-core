@@ -10,7 +10,8 @@ define ['backbone', 'core/views/modelRow'], (Backbone, TableRowView) ->
 
 			options = 
 				model:obj
-				tagName:'tr'
+				tagName:'div'
+				className:'tr'
 				id:@idPrefix+obj.get('id')
 
 			if @options.modelViewConfig
@@ -21,7 +22,7 @@ define ['backbone', 'core/views/modelRow'], (Backbone, TableRowView) ->
 				view.options.template = @options.modelTemplate
 
 			index = @collection.indexOf(obj)
-			before = @$('tr:eq(' + index.toString() + ')')
+			before = @$('.tr:eq(' + index.toString() + ')')
 			if before.length
 				before.before view.render().el
 			else

@@ -26,7 +26,8 @@
         var before, index, options, view;
         options = {
           model: obj,
-          tagName: 'tr',
+          tagName: 'div',
+          className: 'tr',
           id: this.idPrefix + obj.get('id')
         };
         if (this.options.modelViewConfig) {
@@ -37,7 +38,7 @@
           view.options.template = this.options.modelTemplate;
         }
         index = this.collection.indexOf(obj);
-        before = this.$('tr:eq(' + index.toString() + ')');
+        before = this.$('.tr:eq(' + index.toString() + ')');
         if (before.length) {
           return before.before(view.render().el);
         } else {

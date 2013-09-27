@@ -1,6 +1,7 @@
 define ['jquery','core/views/templated', 'core/views/formModal','core/ui/bootstrap/tooltip'], ($, TemplatedView, FormModal) ->
 	class ModelRow extends TemplatedView
-		tagName:'tr'
+		tagName:'div'
+		className:'tr'
 		events:
 			'click .delete':'delete'
 			'click .edit':'edit'

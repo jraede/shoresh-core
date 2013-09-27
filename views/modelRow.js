@@ -13,7 +13,9 @@
         return _ref;
       }
 
-      ModelRow.prototype.tagName = 'tr';
+      ModelRow.prototype.tagName = 'div';
+
+      ModelRow.prototype.className = 'tr';
 
       ModelRow.prototype.events = {
         'click .delete': 'delete',

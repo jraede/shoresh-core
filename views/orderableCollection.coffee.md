@@ -117,7 +117,8 @@ and then calls the `sort` method.
 			addNew: (obj) ->
 				view = new @modelView
 					model: obj
-					tagName: 'tr'
+					tagName: 'div'
+					className:'tr'
 					id:@idPrefix+ obj.get('id')
 				if !view.template
 					view.options.template = @options.modelTemplate
@@ -125,13 +126,13 @@ and then calls the `sort` method.
 				#Strong coupling here for ordering
 				obj.tableRowView = view
 				index = @collection.indexOf(obj)
-				before = @$('tbody tr:eq(' + index.toString() + ')')
+				before = @$('.tbody .tr:eq(' + index.toString() + ')')
 				if before.length
 					before.before view.render().el
 				else
-					@$('tbody').append view.render().el
+					@$('.tbody').append view.render().el
 
 			render: ->
-				@$('tbody').empty()
+				@$('.tbody').empty()
 				@collection.each (obj) =>
 					@addNew(obj)
