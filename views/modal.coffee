@@ -1,7 +1,7 @@
 define ['jquery', 'core/views/templated', 'core/ui/bootstrap/modal'], ($, TemplatedView) ->
 	class ModalView extends TemplatedView
 		tagName:'div'
-		className:'modal fade'
+		className:'modal'
 
 		show: ->
 			@$el.modal('show')
