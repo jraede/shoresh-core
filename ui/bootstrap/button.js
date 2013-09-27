@@ -17,6 +17,7 @@
  * limitations under the License.
  * ======================================================================== */
 
+define(['jquery'], function($) {
 +function ($) { "use strict";
 
   // BUTTON PUBLIC CLASS DEFINITION
@@ -103,4 +104,4 @@
     e.preventDefault()
   })
 
-}(window.jQuery);
+}($)});

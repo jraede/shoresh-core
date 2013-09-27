@@ -17,6 +17,7 @@
  * limitations under the License.
  * ======================================================================== */
 
+define(['jquery', 'core/ui/bootstrap/transition'], function($) {
 +function ($) { "use strict";
 
   // COLLAPSE PUBLIC CLASS DEFINITION
@@ -175,4 +176,4 @@
     $target.collapse(option)
   })
 
-}(window.jQuery);
+}($)});
