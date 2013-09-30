@@ -872,7 +872,6 @@ Backbone.Paginator = (function ( Backbone, _, $ ) {
 		
 		setDefaults: function() {
 			var self = this;
-
 			// Create default values if no others are specified
 			_.defaults(self.paginator_ui, {
 				firstPage: 0,
