@@ -67,6 +67,7 @@
             model2Val = model2.get(columnToUse);
           }
           if (isDate) {
+            _log.info('IS DATE', model1Val, model2Val);
             model1Val = moment(model1Val).unix();
             model2Val = moment(model2Val).unix();
           } else if (/^\d+$/.test(model1Val) && /^\d+$/.test(model2Val) && !isNaN(parseFloat(model1Val)) && !isNaN(parseFloat(model2Val))) {
@@ -99,6 +100,7 @@
           });
         } else {
           this.collection.sort();
+          _log.info(this.collection.models);
           return this.reorder();
         }
       };
@@ -106,7 +108,8 @@
       OrderableCollectionView.prototype.reorder = function() {
         var _this = this;
         return this.collection.each(function(obj) {
-          return obj.tableRowView.$el.prependTo(_this.$('tbody'));
+          _log.info('prepending', obj.attributes);
+          return obj.tableRowView.$el.appendTo(_this.$('.tbody'));
         });
       };
 

@@ -60,6 +60,7 @@ and then calls the `sort` method.
 						model2Val = model2.get(columnToUse)
 
 					if isDate
+						_log.info 'IS DATE', model1Val, model2Val
 						model1Val = moment(model1Val).unix()
 						model2Val = moment(model2Val).unix()
 					else if /^\d+$/.test(model1Val) and /^\d+$/.test(model2Val) and !isNaN(parseFloat(model1Val)) and !isNaN(parseFloat(model2Val))
@@ -96,10 +97,12 @@ and then calls the `sort` method.
 
 				
 					@collection.sort()
+					_log.info @collection.models
 					@reorder()
 			reorder: ->
 				@collection.each (obj) =>
-					obj.tableRowView.$el.prependTo(@$('tbody'))
+					_log.info 'prepending', obj.attributes
+					obj.tableRowView.$el.appendTo(@$('.tbody'))
 
 				
 
