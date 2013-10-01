@@ -6,7 +6,7 @@ define ['jquery', 'backbone'], ($, Backbone) ->
 		tagName:'div'
 		className:'btn-group paginated'
 		events:
-			'click button':'goToPage'
+			'click a':'goToPage'
 
 		initialize:->
 			@listenTo @collection, 'sync', @render
@@ -16,19 +16,22 @@ define ['jquery', 'backbone'], ($, Backbone) ->
 			@collection.goTo(page)
 		render: ->
 			@$el.empty()
-			@container = $('<div class="btn-group paginated hidden-print"/>').appendTo(@$el)
+			@container = $('<ul class="pagination hidden-print"/>').appendTo(@$el)
 			totalPages = @collection.info().totalPages
+			_log.info @collection.info()
 			currentPage = @collection.currentPage
 			if totalPages < 2
 				return
 
-			if @options.firstPageButton
-				firstPageButton = $('<button class="btn btn-default page-nav"/>').data('page', 1).html('<i class="icon-double-angle-left"></i>').appendTo(@container)
-				if currentPage < 3
-					firstPageButton.attr('disabled', 'disabled')
+			#if @options.firstPageButton
+			#	li = $('<li/>').appendTo(@container)
+			#	firstPageButton = $('<a href="#"/>').data('page', 1).html('<i class="icon-double-angle-left"></i>').appendTo(li)
+			#	if currentPage < 3
+			#		firstPageButton.attr('disabled', 'disabled')
 
 			if @options.prevPageButton
-				prevPageButton = $('<button class="btn btn-default page-nav"/>').data('page', currentPage - 1).html('<i class="icon-angle-left"></i>').appendTo(@container)
+				li = $('<li/>').appendTo(@container)
+				prevPageButton = $('<a href="#"/>').data('page', currentPage - 1).html("&laquo;").appendTo(li)
 				if currentPage < 2
 					prevPageButton.attr('disabled', 'disabled')
 
@@ -63,22 +66,24 @@ define ['jquery', 'backbone'], ($, Backbone) ->
 
 			# Draw the page buttons
 			for i in [min..max] by 1
+				li = $('<li/>').appendTo(@container)
 				if i is currentPage
-					$('<button class="btn btn-primary current-page"/>').data('page', i).attr('disabled', 'disabled').html(i.toString()).appendTo(@container)
-				else
-					$('<button class="btn btn-default"/>').data('page', i).html(i.toString()).appendTo(@container)
+					li.addClass('active')
+				$('<a href="#"/>').data('page', i).html(i.toString()).appendTo(li)
 
 
 
 
 			if @options.nextPageButton
-				nextPageButton = $('<button class="btn btn-default page-nav"/>').data('page', currentPage + 1).html('<i class="icon-angle-right"></i>').appendTo(@container)
+				li = $('<li/>').appendTo(@container)
+				nextPageButton = $('<a href="#"/>').data('page', currentPage + 1).html("&raquo;").appendTo(li)
 				if currentPage >= totalPages
 					nextPageButton.attr('disabled', 'disabled')
-			if @options.lastPageButton
-				lastPageButton = $('<button class="btn btn-default page-nav"/>').data('page', totalPages).html('<i class="icon-double-angle-right"></i>').appendTo(@container)
-				if currentPage >= (totalPages - 1)
-					lastPageButton.attr('disabled', 'disabled')
+			#if @options.lastPageButton
+			#	li = $('<li/>').appendTo(@container)
+			#	lastPageButton = $('<a href="#"/>').data('page', totalPages).html('<i class="icon-double-angle-right"></i>').appendTo(li)
+			#	if currentPage >= (totalPages - 1)
+			#		lastPageButton.attr('disabled', 'disabled')
 
 			# Add the visible print thing
 			$('<h2 class="visible-print"/>').html('Page ' + currentPage.toString()).appendTo(@$el)

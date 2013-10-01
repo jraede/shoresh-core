@@ -23,7 +23,7 @@
       PaginationView.prototype.className = 'btn-group paginated';
 
       PaginationView.prototype.events = {
-        'click button': 'goToPage'
+        'click a': 'goToPage'
       };
 
       PaginationView.prototype.initialize = function() {
@@ -37,22 +37,18 @@
       };
 
       PaginationView.prototype.render = function() {
-        var currentPage, diff, firstPageButton, i, lastPageButton, max, min, nextPageButton, pagesOnEachSideOfCurrent, pagesToShow, prevPageButton, totalPages, _i;
+        var currentPage, diff, i, li, max, min, nextPageButton, pagesOnEachSideOfCurrent, pagesToShow, prevPageButton, totalPages, _i;
         this.$el.empty();
-        this.container = $('<div class="btn-group paginated hidden-print"/>').appendTo(this.$el);
+        this.container = $('<ul class="pagination hidden-print"/>').appendTo(this.$el);
         totalPages = this.collection.info().totalPages;
+        _log.info(this.collection.info());
         currentPage = this.collection.currentPage;
         if (totalPages < 2) {
           return;
         }
-        if (this.options.firstPageButton) {
-          firstPageButton = $('<button class="btn btn-default page-nav"/>').data('page', 1).html('<i class="icon-double-angle-left"></i>').appendTo(this.container);
-          if (currentPage < 3) {
-            firstPageButton.attr('disabled', 'disabled');
-          }
-        }
         if (this.options.prevPageButton) {
-          prevPageButton = $('<button class="btn btn-default page-nav"/>').data('page', currentPage - 1).html('<i class="icon-angle-left"></i>').appendTo(this.container);
+          li = $('<li/>').appendTo(this.container);
+          prevPageButton = $('<a href="#"/>').data('page', currentPage - 1).html("&laquo;").appendTo(li);
           if (currentPage < 2) {
             prevPageButton.attr('disabled', 'disabled');
           }
@@ -79,22 +75,17 @@
           }
         }
         for (i = _i = min; _i <= max; i = _i += 1) {
+          li = $('<li/>').appendTo(this.container);
           if (i === currentPage) {
-            $('<button class="btn btn-primary current-page"/>').data('page', i).attr('disabled', 'disabled').html(i.toString()).appendTo(this.container);
-          } else {
-            $('<button class="btn btn-default"/>').data('page', i).html(i.toString()).appendTo(this.container);
+            li.addClass('active');
           }
+          $('<a href="#"/>').data('page', i).html(i.toString()).appendTo(li);
         }
         if (this.options.nextPageButton) {
-          nextPageButton = $('<button class="btn btn-default page-nav"/>').data('page', currentPage + 1).html('<i class="icon-angle-right"></i>').appendTo(this.container);
+          li = $('<li/>').appendTo(this.container);
+          nextPageButton = $('<a href="#"/>').data('page', currentPage + 1).html("&raquo;").appendTo(li);
           if (currentPage >= totalPages) {
             nextPageButton.attr('disabled', 'disabled');
-          }
-        }
-        if (this.options.lastPageButton) {
-          lastPageButton = $('<button class="btn btn-default page-nav"/>').data('page', totalPages).html('<i class="icon-double-angle-right"></i>').appendTo(this.container);
-          if (currentPage >= (totalPages - 1)) {
-            lastPageButton.attr('disabled', 'disabled');
           }
         }
         $('<h2 class="visible-print"/>').html('Page ' + currentPage.toString()).appendTo(this.$el);
