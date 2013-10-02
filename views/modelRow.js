@@ -23,8 +23,7 @@
       };
 
       ModelRow.prototype.initialize = function() {
-        this.listenTo(this.model, 'sync', this.render);
-        return _log.info('init model row');
+        return this.listenTo(this.model, 'sync', this.render);
       };
 
       ModelRow.prototype.deleteMessage = 'Delete this object?';

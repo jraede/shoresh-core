@@ -14,7 +14,7 @@
       }
 
       CollectionView.prototype.initialize = function() {
-        _log.info(this.collection);
+        _log.info('initializing collection view with collection:', this.collection);
         this.listenTo(this.collection, 'add', this.addNew);
         return this.listenTo(this.collection, 'sync', this.synced);
       };
@@ -25,14 +25,13 @@
 
       CollectionView.prototype.synced = function(obj) {
         if (obj instanceof Backbone.Collection) {
-          _log.info(this.collection);
+          _log.info('INSTANCE', this.collection);
           return this.render();
         }
       };
 
       CollectionView.prototype.addNew = function(obj) {
         var before, index, options, view;
-        _log.info('adding new');
         options = {
           model: obj,
           tagName: 'div',
@@ -51,14 +50,12 @@
         if (before.length) {
           return before.before(view.render().el);
         } else {
-          _log.info(this.el);
           return this.$el.append(view.render().el);
         }
       };
 
       CollectionView.prototype.render = function() {
         var _this = this;
-        _log.info('RENDERING collection:', this.collection.models);
         this.$el.empty();
         return this.collection.each(function(obj) {
           return _this.addNew(obj);

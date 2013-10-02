@@ -888,6 +888,8 @@ Backbone.Paginator = (function ( Backbone, _, $ ) {
 				}
 			});
 
+			_log.info ('Set defaults!')
+
 
 		},
 
@@ -938,6 +940,7 @@ Backbone.Paginator = (function ( Backbone, _, $ ) {
 		},
 
 		info: function () {
+			_log.info('Getting info for collection:', this);
 			var info = {
 				// If parse() method is implemented and totalRecords is set to the length
 				// of the records returned, make it available. Else, default it to 0

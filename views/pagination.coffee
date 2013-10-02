@@ -12,14 +12,19 @@ define ['jquery', 'backbone'], ($, Backbone) ->
 			@listenTo @collection, 'sync', @render
 
 		goToPage:(e) ->
-			page = $(e.currentTarget).data('page')
+			e.preventDefault()
+			button = $(e.currentTarget)
+			if button.parent('li').hasClass('disabled')
+				return
+			page = button.data('page')
 			@collection.goTo(page)
 		render: ->
 			@$el.empty()
 			@container = $('<ul class="pagination hidden-print"/>').appendTo(@$el)
 			totalPages = @collection.info().totalPages
-			_log.info @collection.info()
-			currentPage = @collection.currentPage
+			currentPage = @collection.info().currentPage
+			_log.info 'Rendering pagination for page: ', currentPage
+			
 			if totalPages < 2
 				return
 
@@ -33,7 +38,7 @@ define ['jquery', 'backbone'], ($, Backbone) ->
 				li = $('<li/>').appendTo(@container)
 				prevPageButton = $('<a href="#"/>').data('page', currentPage - 1).html("&laquo;").appendTo(li)
 				if currentPage < 2
-					prevPageButton.attr('disabled', 'disabled')
+					li.addClass('disabled')
 
 			pagesToShow = if @options.pagesToShow > 0 then @options.pagesToShow else 5
 
@@ -78,7 +83,7 @@ define ['jquery', 'backbone'], ($, Backbone) ->
 				li = $('<li/>').appendTo(@container)
 				nextPageButton = $('<a href="#"/>').data('page', currentPage + 1).html("&raquo;").appendTo(li)
 				if currentPage >= totalPages
-					nextPageButton.attr('disabled', 'disabled')
+					li.addClass('disabled')
 			#if @options.lastPageButton
 			#	li = $('<li/>').appendTo(@container)
 			#	lastPageButton = $('<a href="#"/>').data('page', totalPages).html('<i class="icon-double-angle-right"></i>').appendTo(li)

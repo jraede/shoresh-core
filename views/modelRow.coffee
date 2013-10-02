@@ -7,7 +7,6 @@ define ['jquery','core/views/templated', 'core/views/formModal','core/ui/bootstr
 			'click .edit':'edit'
 		initialize: ->
 			@listenTo(@model, 'sync', @render)
-			_log.info 'init model row'
 		deleteMessage:'Delete this object?'
 		delegateEvents: ->
 			# Apply tooltip, then super

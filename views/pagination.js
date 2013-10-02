@@ -31,8 +31,13 @@
       };
 
       PaginationView.prototype.goToPage = function(e) {
-        var page;
-        page = $(e.currentTarget).data('page');
+        var button, page;
+        e.preventDefault();
+        button = $(e.currentTarget);
+        if (button.parent('li').hasClass('disabled')) {
+          return;
+        }
+        page = button.data('page');
         return this.collection.goTo(page);
       };
 
@@ -41,8 +46,8 @@
         this.$el.empty();
         this.container = $('<ul class="pagination hidden-print"/>').appendTo(this.$el);
         totalPages = this.collection.info().totalPages;
-        _log.info(this.collection.info());
-        currentPage = this.collection.currentPage;
+        currentPage = this.collection.info().currentPage;
+        _log.info('Rendering pagination for page: ', currentPage);
         if (totalPages < 2) {
           return;
         }
@@ -50,7 +55,7 @@
           li = $('<li/>').appendTo(this.container);
           prevPageButton = $('<a href="#"/>').data('page', currentPage - 1).html("&laquo;").appendTo(li);
           if (currentPage < 2) {
-            prevPageButton.attr('disabled', 'disabled');
+            li.addClass('disabled');
           }
         }
         pagesToShow = this.options.pagesToShow > 0 ? this.options.pagesToShow : 5;
@@ -85,7 +90,7 @@
           li = $('<li/>').appendTo(this.container);
           nextPageButton = $('<a href="#"/>').data('page', currentPage + 1).html("&raquo;").appendTo(li);
           if (currentPage >= totalPages) {
-            nextPageButton.attr('disabled', 'disabled');
+            li.addClass('disabled');
           }
         }
         $('<h2 class="visible-print"/>').html('Page ' + currentPage.toString()).appendTo(this.$el);
