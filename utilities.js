@@ -67,6 +67,7 @@
     };
     window.formatString = function(string, format) {
       var i, length, match, _i;
+      string = string.toString();
       match = format.match(/X/g);
       if (string.length !== match.length) {
         return '';

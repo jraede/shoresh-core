@@ -104,6 +104,7 @@ Takes a format and runs a string through it to create a formatted string.
 E.g. `formatString('5551234567', '(XXX) XXX-XXXX')` will yield `'(555) 123-4567'`
 
 		window.formatString = (string, format) ->
+			string = string.toString()
 			match = format.match(/X/g);  
 			if string.length != match.length
 				return ''
