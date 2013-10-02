@@ -19,10 +19,20 @@
         var _this = this;
         this.$el.empty();
         Template.load(this.options.template, function(view) {
-          if (_this.model) {
-            _this.$el.html(_.template(view, _this.model.toTemplate()));
-          } else {
-            _this.$el.html(_.template(view, _this.options.templateAttributes));
+          var error;
+          try {
+            if (_this.model) {
+              _this.$el.html(_.template(view, _this.model.toTemplate()));
+            } else {
+              _this.$el.html(_.template(view, _this.options.templateAttributes));
+            }
+          } catch (_error) {
+            error = _error;
+            error.type = 'template';
+            error.info = {
+              template: _this.options.template
+            };
+            window.shoreshConfig.handleError(error);
           }
           _this.delegateEvents();
           _this.setup();
