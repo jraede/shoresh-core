@@ -23,7 +23,7 @@ define ['jquery', 'backbone'], ($, Backbone) ->
 			@container = $('<ul class="pagination hidden-print"/>').appendTo(@$el)
 			totalPages = @collection.info().totalPages
 			currentPage = @collection.info().currentPage
-			_log.info 'Rendering pagination for page: ', currentPage
+			_log.info 'Rendering pagination for page: ', currentPage, @collection.info()
 			
 			if totalPages < 2
 				return
@@ -91,7 +91,8 @@ define ['jquery', 'backbone'], ($, Backbone) ->
 			#		lastPageButton.attr('disabled', 'disabled')
 
 			# Add the visible print thing
-			$('<h2 class="visible-print"/>').html('Page ' + currentPage.toString()).appendTo(@$el)
+			if totalPages > 1
+				$('<h2 class="visible-print"/>').html('Page ' + currentPage.toString()).appendTo(@$el)
 			@delegateEvents()
 
 

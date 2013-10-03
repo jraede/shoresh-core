@@ -47,7 +47,7 @@
         this.container = $('<ul class="pagination hidden-print"/>').appendTo(this.$el);
         totalPages = this.collection.info().totalPages;
         currentPage = this.collection.info().currentPage;
-        _log.info('Rendering pagination for page: ', currentPage);
+        _log.info('Rendering pagination for page: ', currentPage, this.collection.info());
         if (totalPages < 2) {
           return;
         }
@@ -93,7 +93,9 @@
             li.addClass('disabled');
           }
         }
-        $('<h2 class="visible-print"/>').html('Page ' + currentPage.toString()).appendTo(this.$el);
+        if (totalPages > 1) {
+          $('<h2 class="visible-print"/>').html('Page ' + currentPage.toString()).appendTo(this.$el);
+        }
         return this.delegateEvents();
       };
 
