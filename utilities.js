@@ -10,12 +10,14 @@
       },
       info: function() {
         if (shoreshConfig.debug === true) {
-          return console.log('LOG [' + this.microtime().toString() + '] ', arguments);
+          arguments.unshift('LOG [' + this.microtime().toString() + ']');
+          return console.log.apply(arguments);
         }
       },
       error: function() {
         if (shoreshConfig.debug === true) {
-          return console.error('ERROR [' + this.microtime().toString() + '] ', arguments);
+          arguments.unshift('ERROR [' + this.microtime().toString() + ']');
+          return console.error.apply(arguments);
         }
       }
     };

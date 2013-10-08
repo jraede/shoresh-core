@@ -24,6 +24,7 @@
       CollectionView.prototype.modelView = TableRowView;
 
       CollectionView.prototype.synced = function(obj) {
+        _log.info('COLLECTION VIEW SYNCED');
         if (obj instanceof Backbone.Collection) {
           _log.info('INSTANCE', this.collection);
           return this.render();
@@ -57,6 +58,7 @@
       CollectionView.prototype.render = function() {
         var _this = this;
         this.$el.empty();
+        _log.info('RENDERING COLLECTION VIEW: ', this.collection);
         return this.collection.each(function(obj) {
           return _this.addNew(obj);
         });

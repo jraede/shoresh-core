@@ -33,14 +33,16 @@ Log a variable number of arguments to the console
 
 			info: ->
 				if shoreshConfig.debug is true
-					console.log 'LOG [' + @microtime().toString() + '] ', arguments
+					arguments.unshift('LOG [' + @microtime().toString() + ']')
+					console.log.apply arguments
 			
 ### _log.error
 Log a variable number of arguments to the console as errors
 
 			error: ->
 				if shoreshConfig.debug is true
-					console.error 'ERROR [' + @microtime().toString() + '] ', arguments
+					arguments.unshift('ERROR [' + @microtime().toString() + ']')
+					console.error.apply arguments
 
 inflector
 ---
