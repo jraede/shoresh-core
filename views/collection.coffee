@@ -8,6 +8,7 @@ define ['backbone', 'core/views/modelRow'], (Backbone, TableRowView) ->
 		idPrefix:'obj-'
 		modelView:TableRowView
 		synced:(obj) ->
+			_log.info 'COLLECTION VIEW SYNCED'
 			if obj instanceof Backbone.Collection
 				_log.info 'INSTANCE', @collection
 				@render()
@@ -33,5 +34,6 @@ define ['backbone', 'core/views/modelRow'], (Backbone, TableRowView) ->
 				@$el.append view.render().el
 		render: ->
 			@$el.empty()
+			_log.info 'RENDERING COLLECTION VIEW: ', @collection
 			@collection.each (obj) =>
 				@addNew(obj)
