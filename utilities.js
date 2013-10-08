@@ -10,12 +10,12 @@
       },
       info: function() {
         if (shoreshConfig.debug === true) {
-          return console.log.apply(arguments);
+          return console.log.apply(console, arguments);
         }
       },
       error: function() {
         if (shoreshConfig.debug === true) {
-          return console.error.apply(arguments);
+          return console.error.apply(console, arguments);
         }
       }
     };
