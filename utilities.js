@@ -10,13 +10,11 @@
       },
       info: function() {
         if (shoreshConfig.debug === true) {
-          arguments.unshift('LOG [' + this.microtime().toString() + ']');
           return console.log.apply(arguments);
         }
       },
       error: function() {
         if (shoreshConfig.debug === true) {
-          arguments.unshift('ERROR [' + this.microtime().toString() + ']');
           return console.error.apply(arguments);
         }
       }
