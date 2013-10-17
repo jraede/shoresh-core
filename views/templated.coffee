@@ -12,6 +12,7 @@ define ['backbone', 'core/ui/template'], (Backbone, Template) ->
 					else
 						@$el.html _.template view, @options.templateAttributes
 				catch error
+					throw error
 					error.type = 'template'
 					error.info =
 						template:@options.template

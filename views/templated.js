@@ -28,6 +28,7 @@
             }
           } catch (_error) {
             error = _error;
+            throw error;
             error.type = 'template';
             error.info = {
               template: _this.options.template

@@ -52,7 +52,13 @@ If your Shoresh configuration allows file extensions, we assume that paths witho
 	#	if err.requireModules[0].indexOf('app/controllers/') isnt 0
 	#		throw err
 
-	if window.shoreshConfig.controllerPath?
+	# Check if the first part of the path is a module
+	module = explode[0]
+	if window.shoreshConfig.modules? and window.shoreshConfig.modules[module]?
+
+		controllerPath = window.shoreshConfig.modules[module]
+		explode.shift()
+	else if window.shoreshConfig.controllerPath?
 		controllerPath = window.shoreshConfig.controllerPath + '/'
 	else
 		controllerPath = 'app/controllers/'
